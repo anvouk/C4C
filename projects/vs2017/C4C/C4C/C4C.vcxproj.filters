@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{6a6b6eee-4f2b-442f-8dfd-9d6325be4907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples">
+      <UniqueIdentifier>{77af4322-2fa2-4011-983b-2f0bd659de4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\containers">
+      <UniqueIdentifier>{567fb340-eece-4eb8-97dc-25a29559ddd8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\c4c\c4c_container_helpers.h">
+      <Filter>include\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\c4c\c4c_config.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\c4c\c4c_struct.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\c4c\c4c_function.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\include\c4c\c4c_container_linked_list_decl.inl">
+      <Filter>include\containers</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\c4c_container_linked_list_impl.inl">
+      <Filter>include\containers</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\c4c_container_stack_decl.inl">
+      <Filter>include\containers</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\c4c_container_stack_impl.inl">
+      <Filter>include\containers</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\examples\container_linked_list_example_c89.c">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\examples\container_stack_example_c89.c">
+      <Filter>examples</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
