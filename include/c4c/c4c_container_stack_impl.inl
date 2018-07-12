@@ -39,7 +39,7 @@
 
 C4C_STRUCT_BEGIN(C4C_PARAM_STACK_STRUCT_NAME)
 	size_t count;
-	C4C_PARAM_STACK_ELEM_TYPE* elements[C4C_PARAM_STACK_MAX_SIZE];
+	C4C_PARAM_STACK_ELEM_TYPE elements[C4C_PARAM_STACK_MAX_SIZE];
 C4C_STRUCT_END(C4C_PARAM_STACK_STRUCT_NAME)
 #endif
 
@@ -51,11 +51,11 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, void, _clear, stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
-		memset(stack->elements, 0, sizeof(C4C_PARAM_STACK_ELEM_TYPE*) * C4C_PARAM_STACK_MAX_SIZE);
+		memset(stack->elements, 0, sizeof(C4C_PARAM_STACK_ELEM_TYPE) * C4C_PARAM_STACK_MAX_SIZE);
 	}
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_ELEM_TYPE* new_element)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_ELEM_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_STACK_MAX_SIZE)
 		return 0;
@@ -64,12 +64,12 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_ELEM_
 	return 1;
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_ELEM_TYPE*, _pop, stack)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_ELEM_TYPE, _pop, stack)
 {
 	if (stack->count == 0)
 		return NULL;
 	stack->count--;
-	C4C_PARAM_STACK_ELEM_TYPE* bottom = stack->elements[stack->count];
+	C4C_PARAM_STACK_ELEM_TYPE bottom = stack->elements[stack->count];
 	stack->elements[stack->count] = NULL;
 	return bottom;
 }

@@ -45,7 +45,7 @@ typedef struct my_type {
 */
 
 /* 2. Declare the container interface in a .h file. */
-#define C4C_PARAM_STACK_ELEM_TYPE my_type
+#define C4C_PARAM_STACK_ELEM_TYPE my_type*
 #define C4C_PARAM_STACK_MAX_SIZE 64
 #define C4C_PARAM_STACK_STRUCT_NAME my_type_stack
 #include "c4c/c4c_container_stack_decl.inl"
@@ -54,7 +54,7 @@ typedef struct my_type {
  *    want it to be. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
-#define C4C_PARAM_STACK_ELEM_TYPE my_type
+#define C4C_PARAM_STACK_ELEM_TYPE my_type*
 #define C4C_PARAM_STACK_MAX_SIZE 64
 #define C4C_PARAM_STACK_STRUCT_NAME my_type_stack
 #include "c4c/c4c_container_stack_impl.inl"
