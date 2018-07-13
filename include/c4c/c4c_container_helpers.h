@@ -39,4 +39,9 @@
 	C4C_FUNCTION_CALL(_C4C_CONCAT(struct_raw_name, method_suffix), __VA_ARGS__)
 #endif
 
+#ifndef C4C_METHOD_INLINE
+#define C4C_METHOD_INLINE(struct_raw_name, rettype, method_suffix, ...) \
+	C4C_FUNCTION_INLINE(rettype, _C4C_CONCAT(struct_raw_name, method_suffix), __VA_ARGS__)
+#endif
+
 #endif /* __C4C_CONTAINER_HELPERS_H__ */

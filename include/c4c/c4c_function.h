@@ -41,4 +41,9 @@
 	name(__VA_ARGS__)
 #endif
 
+#ifndef C4C_FUNCTION_INLINE
+#define C4C_FUNCTION_INLINE(rettype, name, ...) \
+	static rettype C4C_CALL_CONVENTION name(__VA_ARGS__)
+#endif
+
 #endif /* __C4C_FUNCTION_H__ */

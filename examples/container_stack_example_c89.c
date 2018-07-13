@@ -45,52 +45,60 @@ typedef struct my_type {
 */
 
 /* 2. Declare the container interface in a .h file. */
-#define C4C_PARAM_STACK_ELEM_TYPE my_type*
-#define C4C_PARAM_STACK_MAX_SIZE 64
 #define C4C_PARAM_STACK_STRUCT_NAME my_type_stack
+#define C4C_PARAM_STACK_CONTENT_TYPE int
+#define C4C_PARAM_STACK_MAX_SIZE 64
+#define C4C_PARAM_STACK_NO_VALUE_TYPE int
+#define C4C_PARAM_STACK_NO_VALUE -1
 #include "c4c/c4c_container_stack_decl.inl"
 
-/* 3. Declare the container implementation in a .c file or in wherever you 
+/* 3. Declare the container implementation in a .c file or in wherever you
  *    want it to be. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
-#define C4C_PARAM_STACK_ELEM_TYPE my_type*
-#define C4C_PARAM_STACK_MAX_SIZE 64
 #define C4C_PARAM_STACK_STRUCT_NAME my_type_stack
+#define C4C_PARAM_STACK_CONTENT_TYPE int
+#define C4C_PARAM_STACK_MAX_SIZE 64
+#define C4C_PARAM_STACK_NO_VALUE_TYPE int
+#define C4C_PARAM_STACK_NO_VALUE -1
 #include "c4c/c4c_container_stack_impl.inl"
 
 /* 4. Magic happens. You can now use the container for your type :) */
 int main(int argc, char* argv[])
 {
 	/* variables */
-	my_type* popt;
-	my_type t1, t2, t3;
+	int popt;
+	int t1, t2, t3;
 	my_type_stack stack;
-	
+
 	/* init some custom types */
-	t1.a = 1;   t1.b = 2;
-	t2.a = 10;  t2.b = 20;
-	t3.a = 100; t3.b = 200;
+	t1 = 1;
+	t2 = 10;
+	t3 = 100;
+
+	/* print max stack size */
+	printf("stack max size: %d\n", my_type_stack_max_size());
 
 	/* prepare the stack for usage */
 	my_type_stack_clear(&stack);
-	
+
 	/* push your custom types in the stack (if there is enough space) */
-	assert(my_type_stack_push(&stack, &t1) && "t1 discarded: the stack is full");
-	assert(my_type_stack_push(&stack, &t2) && "t2 discarded: the stack is full");
-	assert(my_type_stack_push(&stack, &t3) && "t3 discarded: the stack is full");
+	assert(my_type_stack_push(&stack, t1) && "t1 discarded: the stack is full");
+	assert(my_type_stack_push(&stack, t2) && "t2 discarded: the stack is full");
+	assert(my_type_stack_push(&stack, t3) && "t3 discarded: the stack is full");
 
 	/* pop the content until the stack is empty */
 	while (1) {
 		popt = my_type_stack_pop(&stack);
-		if (popt) {
-			printf("popt (a: %d, b: %d)\n", popt->a, popt->b);
+		/* check if popt has a valid value */
+		if (popt != my_type_stack_null_val()) {
+			printf("popt (a: %d)\n", popt);
 		} else {
-			printf("popt is NULL thus the stack is surely empty.\n");
+			printf("popt is %d thus the stack is surely empty.\n", my_type_stack_null_val());
 			break;
 		}
 	}
-	
+
 	getchar();
 	return EXIT_SUCCESS;
 }

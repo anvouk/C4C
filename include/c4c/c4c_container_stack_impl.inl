@@ -33,7 +33,7 @@
 
 /* for internal debug purposes */
 #if 0
-#define C4C_PARAM_STACK_ELEM_TYPE int
+#define C4C_PARAM_STACK_CONTENT_TYPE int
 #define C4C_PARAM_STACK_MAX_SIZE 64
 #define C4C_PARAM_STACK_STRUCT_NAME test
 
@@ -51,11 +51,11 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, void, _clear, stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
-		memset(stack->elements, 0, sizeof(C4C_PARAM_STACK_ELEM_TYPE) * C4C_PARAM_STACK_MAX_SIZE);
+		memset(stack->elements, 0, sizeof(C4C_PARAM_STACK_CONTENT_TYPE) * C4C_PARAM_STACK_MAX_SIZE);
 	}
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_ELEM_TYPE new_element)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_CONTENT_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_STACK_MAX_SIZE)
 		return 0;
@@ -64,13 +64,13 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_ELEM_
 	return 1;
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_ELEM_TYPE, _pop, stack)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_CONTENT_TYPE, _pop, stack)
 {
 	if (stack->count == 0)
-		return NULL;
+		return (C4C_PARAM_STACK_CONTENT_TYPE)C4C_PARAM_STACK_NO_VALUE;
 	stack->count--;
-	C4C_PARAM_STACK_ELEM_TYPE bottom = stack->elements[stack->count];
-	stack->elements[stack->count] = NULL;
+	C4C_PARAM_STACK_CONTENT_TYPE bottom = stack->elements[stack->count];
+	stack->elements[stack->count] = (C4C_PARAM_STACK_CONTENT_TYPE)C4C_PARAM_STACK_NO_VALUE;
 	return bottom;
 }
 
@@ -78,11 +78,17 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_ELEM_TYPE, _pop, stack)
     undef header params
 ------------------------------------------------------------------------------*/
 
+/* The stack struct name (name) (eg. my_int_stack, x_stack) */
+#undef C4C_PARAM_STACK_STRUCT_NAME
+
 /* The stack element type (type) (eg. int, char, or a custom struct */
-#undef C4C_PARAM_STACK_ELEM_TYPE
+#undef C4C_PARAM_STACK_CONTENT_TYPE
 
 /* The stack max size (size_t) (eg. 256, 400) */
 #undef C4C_PARAM_STACK_MAX_SIZE
 
-/* The stack struct name (name) (eg. my_int_stack, x_stack) */
-#undef C4C_PARAM_STACK_STRUCT_NAME
+/* The type of C4C_PARAM_STACK_NO_VALUE (type) (eg. void*, int) */
+#undef C4C_PARAM_STACK_NO_VALUE_TYPE
+
+/* The value that indicates that there's no value (value) (eg. NULL, -1, -9999) */
+#undef C4C_PARAM_STACK_NO_VALUE

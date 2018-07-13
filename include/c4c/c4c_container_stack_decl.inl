@@ -39,7 +39,7 @@
  */
 C4C_STRUCT_BEGIN(C4C_PARAM_STACK_STRUCT_NAME)
 	size_t count;
-	C4C_PARAM_STACK_ELEM_TYPE elements[C4C_PARAM_STACK_MAX_SIZE];
+	C4C_PARAM_STACK_CONTENT_TYPE elements[C4C_PARAM_STACK_MAX_SIZE];
 C4C_STRUCT_END(C4C_PARAM_STACK_STRUCT_NAME)
 
 /*------------------------------------------------------------------------------
@@ -64,26 +64,53 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, void, _clear, stack);
  * @retval 0 if the stack is already full.
  * @retval 1 if the new_element was added successfully to the stack.
  */
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_ELEM_TYPE new_element);
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_CONTENT_TYPE new_element);
 
 /**
  * Remove the element at the top of the stack and return it.
  *
  * @param stack The LIFO stack.
  *
- * @return The element at the top of the stack. NULL if the stack is empty.
+ * @return The element at the top of the stack.
+ *         C4C_PARAM_STACK_NO_VALUE if the stack is empty.
  */
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_ELEM_TYPE, _pop, stack);
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_CONTENT_TYPE, _pop, stack);
+
+/**
+ * Get the stack maximum capacity.
+ * 
+ * @return The stack max size.
+ */
+C4C_METHOD_INLINE(C4C_PARAM_STACK_STRUCT_NAME, size_t, _max_size, void)
+{
+	return (size_t)C4C_PARAM_STACK_MAX_SIZE;
+}
+
+/**
+ * Get the stack's content invalid value.
+ * 
+ * @return A value that signals that the stack is currently empty.
+ */
+C4C_METHOD_INLINE(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_NO_VALUE_TYPE, _null_val, void)
+{
+	return (C4C_PARAM_STACK_NO_VALUE_TYPE)C4C_PARAM_STACK_NO_VALUE;
+}
 
 /*------------------------------------------------------------------------------
     undef header params
 ------------------------------------------------------------------------------*/
 
+/* The stack struct name (name) (eg. my_int_stack, x_stack) */
+#undef C4C_PARAM_STACK_STRUCT_NAME
+
 /* The stack element type (type) (eg. int, char, or a custom struct */
-#undef C4C_PARAM_STACK_ELEM_TYPE
+#undef C4C_PARAM_STACK_CONTENT_TYPE
 
 /* The stack max size (size_t) (eg. 256, 400) */
 #undef C4C_PARAM_STACK_MAX_SIZE
 
-/* The stack struct name (name) (eg. my_int_stack, x_stack) */
-#undef C4C_PARAM_STACK_STRUCT_NAME
+/* The type of C4C_PARAM_STACK_NO_VALUE (type) (eg. void*, int) */
+#undef C4C_PARAM_STACK_NO_VALUE_TYPE
+
+/* The value that indicates that there's no value (value) (eg. NULL, -1, -9999) */
+#undef C4C_PARAM_STACK_NO_VALUE
