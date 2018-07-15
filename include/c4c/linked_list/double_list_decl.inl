@@ -39,6 +39,7 @@
 Parameters:
 
 #define C4C_PARAM_LIST_CONTENT 
+#define C4C_PARAM_LIST_PREFIX 
 #define C4C_PARAM_LIST_STRUCT_NAME 
 */
 
@@ -64,7 +65,7 @@ C4C_STRUCT_END(C4C_PARAM_LIST_STRUCT_NAME)
  * 
  * @param head The linked list head.
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head);
 
 /**
  * Insert a new entry after the specified head.
@@ -72,7 +73,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM
  * @param head list Head to add it after.
  * @param new_list New entry to be added.
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list);
 
 /**
  * Insert a new entry before the specified head.
@@ -80,7 +81,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_
  * @param head list Head to add it before.
  * @param new_list New entry to be added.
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list);
 
 /**
  * Deletes entry from list.
@@ -90,7 +91,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_P
  * @warning c4c_list_is_empty on entry does not return true after this, the entry 
  *          is in an undefined state (next and prev are set to NULL).
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* entry);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* entry);
 
 /**
  * Delete from one list and add as another's head.
@@ -98,7 +99,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PAR
  * @param head The head that will precede our entry.
  * @param list The entry to move.
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
 
 /**
  * Delete from one list and add as another's tail.
@@ -106,7 +107,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM
  * @param head The head that will follow our entry.
  * @param list The entry to move.
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
 
 /**
  * Join two lists.
@@ -114,7 +115,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_
  * @param head The place to add it in the first list.
  * @param list The new list to add.
  */
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
 
 /* remove the custom version of this unless it's the user's */
 #ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
@@ -171,7 +172,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PAR
 	for (pos = (head)->next, n = pos->next; pos != (head); pos = n, n = pos->next)
 #endif
 
-#ifndef c4c_dlist_foreach_safe_backward
+#ifndef c4c_list_foreach_safe_backward
 /**
  * Iterate over a list backwards safe against removal of list entry.
  * 
@@ -179,7 +180,7 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PAR
  * @param pos The struct to use as a loop counter.
  * @param n	Another struct to use as temporary storage.
  */
-#define c4c_dlist_foreach_safe_backward(head, pos, n) \
+#define c4c_list_foreach_safe_backward(head, pos, n) \
 	for (pos = (head)->prev, n = pos->prev; pos != (head); pos = n, n = pos->prev)
 #endif
 
@@ -189,6 +190,9 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PAR
 
 /* The list content (type variable_name;) (eg. int a;, char a; long b;, or custom structs */
 #undef C4C_PARAM_LIST_CONTENT
+
+/* The list functions' prefix (name) (eg. my_list) */
+#undef C4C_PARAM_LIST_PREFIX 
 
 /* The list struct name (name) (eg. my_int_list, x_list) */
 #undef C4C_PARAM_LIST_STRUCT_NAME

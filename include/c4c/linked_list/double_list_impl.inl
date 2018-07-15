@@ -32,8 +32,8 @@
 
 /* we want a custom version of this unless the user has already a custom one */
 #ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#define C4C_METHOD(struct_name, rettype, suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_name, suffix), __VA_ARGS__)
+#define C4C_METHOD(prefix, rettype, suffix, ...) \
+	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 #include "c4c/container_helpers.h"
 
@@ -43,6 +43,7 @@
 Parameters:
 
 #define C4C_PARAM_LIST_CONTENT 
+#define C4C_PARAM_LIST_PREFIX 
 #define C4C_PARAM_LIST_STRUCT_NAME 
 */
 
@@ -92,39 +93,39 @@ Parameters:
     linked list functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head)
 {
 	head->next = head;
 	head->prev = head;
 }
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list)
 {
 	_list_add_(new_list, head, head->next);
 }
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list)
 {
 	_list_add_(new_list, head->prev, head);
 }
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* entry)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* entry)
 {
 	_list_delete_(entry->prev, entry->next);
 	entry->next = NULL;
 	entry->prev = NULL;
 }
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(C4C_PARAM_LIST_STRUCT_NAME, _add, head, list);
+	C4C_METHOD_CALL(C4C_PARAM_LIST_PREFIX, _add, head, list);
 }
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(C4C_PARAM_LIST_STRUCT_NAME, _add_tail, head, list);
+	C4C_METHOD_CALL(C4C_PARAM_LIST_PREFIX, _add_tail, head, list);
 }
 
 C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
@@ -149,6 +150,9 @@ C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PAR
 
 /* The list content (type variable_name;) (eg. int a;, char a; long b;, or custom structs */
 #undef C4C_PARAM_LIST_CONTENT
+
+/* The list functions' prefix (name) (eg. my_list) */
+#undef C4C_PARAM_LIST_PREFIX 
 
 /* The list struct name (name) (eg. my_int_list, x_list) */
 #undef C4C_PARAM_LIST_STRUCT_NAME
