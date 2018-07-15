@@ -22,26 +22,16 @@
  * THE SOFTWARE.
  */
 
-#ifndef __C4C_CONTAINER_HELPERS_H__
-#define __C4C_CONTAINER_HELPERS_H__
+#include <stddef.h>
 
-#include "c4c/c4c_config.h"
-#include "c4c/c4c_function.h"
-#include "c4c/c4c_struct.h"
+/*
+Parameters:
 
-#ifndef C4C_METHOD
-#define C4C_METHOD(struct_raw_name, rettype, method_suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_raw_name, method_suffix), C4C_STRUCT_DECLARE(struct_raw_name)* __VA_ARGS__)
-#endif
+#define C4C_PARAM_STACK_STRUCT_NAME 
+#define C4C_PARAM_STACK_CONTENT_TYPE 
+#define C4C_PARAM_STACK_MAX_SIZE 
+*/
 
-#ifndef C4C_METHOD_CALL
-#define C4C_METHOD_CALL(struct_raw_name, method_suffix, ...) \
-	C4C_FUNCTION_CALL(_C4C_CONCAT(struct_raw_name, method_suffix), __VA_ARGS__)
-#endif
-
-#ifndef C4C_METHOD_INLINE
-#define C4C_METHOD_INLINE(struct_raw_name, rettype, method_suffix, ...) \
-	C4C_FUNCTION_INLINE(rettype, _C4C_CONCAT(struct_raw_name, method_suffix), __VA_ARGS__)
-#endif
-
-#endif /* __C4C_CONTAINER_HELPERS_H__ */
+#define C4C_PARAM_STACK_NO_VALUE_TYPE void*
+#define C4C_PARAM_STACK_NO_VALUE NULL
+#include <c4c/stack/literal_impl.inl>

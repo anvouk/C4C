@@ -50,8 +50,8 @@
 #define _C4C_CONCAT(a, b) a##b
 
 #define _C4C_VERSION_MAJOR 0
-#define _C4C_VERSION_MINOR 1
-#define _C4C_VERSION_PATCH 1
+#define _C4C_VERSION_MINOR 2
+#define _C4C_VERSION_PATCH 0
 #define _C4C_VERSION_STATE "alpha"
 
 #define _C4C_VERSION_STR \

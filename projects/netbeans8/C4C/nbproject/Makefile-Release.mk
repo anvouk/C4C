@@ -35,8 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/b35ef618/container_linked_list_example_c89.o \
-	${OBJECTDIR}/_ext/b35ef618/container_stack_example_c89.o
+	${OBJECTDIR}/_ext/b35ef618/example_double_linked_list_c89.o \
+	${OBJECTDIR}/_ext/b35ef618/example_stack_literal_c89.o \
+	${OBJECTDIR}/_ext/b35ef618/example_stack_nullable_c89.o
 
 
 # C Compiler Flags
@@ -63,15 +64,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/c4c.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/c4c ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/b35ef618/container_linked_list_example_c89.o: ../../../examples/container_linked_list_example_c89.c
+${OBJECTDIR}/_ext/b35ef618/example_double_linked_list_c89.o: ../../../examples/example_double_linked_list_c89.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/b35ef618
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b35ef618/container_linked_list_example_c89.o ../../../examples/container_linked_list_example_c89.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b35ef618/example_double_linked_list_c89.o ../../../examples/example_double_linked_list_c89.c
 
-${OBJECTDIR}/_ext/b35ef618/container_stack_example_c89.o: ../../../examples/container_stack_example_c89.c
+${OBJECTDIR}/_ext/b35ef618/example_stack_literal_c89.o: ../../../examples/example_stack_literal_c89.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/b35ef618
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b35ef618/container_stack_example_c89.o ../../../examples/container_stack_example_c89.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b35ef618/example_stack_literal_c89.o ../../../examples/example_stack_literal_c89.c
+
+${OBJECTDIR}/_ext/b35ef618/example_stack_nullable_c89.o: ../../../examples/example_stack_nullable_c89.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/b35ef618
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/b35ef618/example_stack_nullable_c89.o ../../../examples/example_stack_nullable_c89.c
 
 # Subprojects
 .build-subprojects:

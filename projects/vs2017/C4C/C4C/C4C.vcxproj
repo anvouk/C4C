@@ -123,20 +123,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\include\c4c\c4c_config.h" />
-    <ClInclude Include="..\..\..\..\include\c4c\c4c_container_helpers.h" />
-    <ClInclude Include="..\..\..\..\include\c4c\c4c_function.h" />
-    <ClInclude Include="..\..\..\..\include\c4c\c4c_struct.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\config.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\container_helpers.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\function.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\struct.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\include\c4c\c4c_container_linked_list_decl.inl" />
-    <None Include="..\..\..\..\include\c4c\c4c_container_linked_list_impl.inl" />
-    <None Include="..\..\..\..\include\c4c\c4c_container_stack_decl.inl" />
-    <None Include="..\..\..\..\include\c4c\c4c_container_stack_impl.inl" />
+    <ClCompile Include="..\..\..\..\examples\example_double_linked_list_c89.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\examples\example_stack_literal_c89.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\examples\example_stack_nullable_c89.c">
+      <SubType>
+      </SubType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <None Include="..\..\..\..\include\c4c\stack\nullable_decl.inl">
+      <SubType>
+      </SubType>
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\examples\container_linked_list_example_c89.c" />
-    <ClCompile Include="..\..\..\..\examples\container_stack_example_c89.c" />
+    <None Include="..\..\..\..\include\c4c\linked_list\double_list_decl.inl" />
+    <None Include="..\..\..\..\include\c4c\linked_list\double_list_impl.inl" />
+    <None Include="..\..\..\..\include\c4c\stack\literal_decl.inl" />
+    <None Include="..\..\..\..\include\c4c\stack\literal_impl.inl" />
+    <None Include="..\..\..\..\include\c4c\stack\nullable_impl.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

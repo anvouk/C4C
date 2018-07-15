@@ -26,18 +26,25 @@
  * This header has been heavily inspired by linux's linked list
  */
 
-#include "c4c/c4c_config.h"
-#include "c4c/c4c_function.h"
-#include "c4c/c4c_struct.h"
+#include "c4c/config.h"
+#include "c4c/function.h"
+#include "c4c/struct.h"
 
 /* we want a custom version of this unless the user has already a custom one */
 #ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#define C4C_METHOD(struct_raw_name, rettype, method_suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_raw_name, method_suffix), __VA_ARGS__)
+#define C4C_METHOD(struct_name, rettype, suffix, ...) \
+	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_name, suffix), __VA_ARGS__)
 #endif
-#include "c4c/c4c_container_helpers.h"
+#include "c4c/container_helpers.h"
 
 #include <stddef.h> /* For NULL */
+
+/*
+Parameters:
+
+#define C4C_PARAM_LIST_CONTENT 
+#define C4C_PARAM_LIST_STRUCT_NAME 
+*/
 
 /*------------------------------------------------------------------------------
     linked list static functions
@@ -72,9 +79,9 @@
 
 #define _list_splice_(list, head) \
 	do { \
-		C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* first = list->next; \
-		C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* last = list->prev; \
-		C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* at = head->next; \
+		C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* first = list->next; \
+		C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* last = list->prev; \
+		C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* at = head->next; \
 		first->prev = head; \
 		head->next = first; \
 		last->next = at; \
@@ -85,42 +92,42 @@
     linked list functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head)
 {
 	head->next = head;
 	head->prev = head;
 }
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* new_list)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list)
 {
 	_list_add_(new_list, head, head->next);
 }
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* new_list)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list)
 {
 	_list_add_(new_list, head->prev, head);
 }
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* entry)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* entry)
 {
 	_list_delete_(entry->prev, entry->next);
 	entry->next = NULL;
 	entry->prev = NULL;
 }
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* list)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(C4C_PARAM_DLIST_STRUCT_NAME, _add, head, list);
+	C4C_METHOD_CALL(C4C_PARAM_LIST_STRUCT_NAME, _add, head, list);
 }
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* list)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(C4C_PARAM_DLIST_STRUCT_NAME, _add_tail, head, list);
+	C4C_METHOD_CALL(C4C_PARAM_LIST_STRUCT_NAME, _add_tail, head, list);
 }
 
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* list)
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
 {
 	if (!c4c_list_is_empty(list))
 		_list_splice_(list, head);
@@ -141,7 +148,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PA
 ------------------------------------------------------------------------------*/
 
 /* The list content (type variable_name;) (eg. int a;, char a; long b;, or custom structs */
-#undef C4C_PARAM_DLIST_CONTENT
+#undef C4C_PARAM_LIST_CONTENT
 
 /* The list struct name (name) (eg. my_int_list, x_list) */
-#undef C4C_PARAM_DLIST_STRUCT_NAME
+#undef C4C_PARAM_LIST_STRUCT_NAME

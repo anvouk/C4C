@@ -22,18 +22,25 @@
  * THE SOFTWARE.
  */
 
-#include "c4c/c4c_config.h"
-#include "c4c/c4c_function.h"
-#include "c4c/c4c_struct.h"
+#include "c4c/config.h"
+#include "c4c/function.h"
+#include "c4c/struct.h"
 
 /* we want a custom version of this unless the user has already a custom one */
 #ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#define C4C_METHOD(struct_raw_name, rettype, method_suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_raw_name, method_suffix), __VA_ARGS__)
+#define C4C_METHOD(struct_name, rettype, suffix, ...) \
+	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_name, suffix), __VA_ARGS__)
 #endif
-#include "c4c/c4c_container_helpers.h"
+#include "c4c/container_helpers.h"
 
 #include <stddef.h> /* For size_t */
+
+/*
+Parameters:
+
+#define C4C_PARAM_LIST_CONTENT 
+#define C4C_PARAM_LIST_STRUCT_NAME 
+*/
 
 /*------------------------------------------------------------------------------
    linked list struct definition
@@ -42,11 +49,11 @@
 /**
  * Double linked list.
  */
-C4C_STRUCT_BEGIN(C4C_PARAM_DLIST_STRUCT_NAME)
-	C4C_PARAM_DLIST_CONTENT
-	struct C4C_PARAM_DLIST_STRUCT_NAME* next;
-	struct C4C_PARAM_DLIST_STRUCT_NAME* prev;
-C4C_STRUCT_END(C4C_PARAM_DLIST_STRUCT_NAME)
+C4C_STRUCT_BEGIN(C4C_PARAM_LIST_STRUCT_NAME)
+	C4C_PARAM_LIST_CONTENT
+	struct C4C_PARAM_LIST_STRUCT_NAME* next;
+	struct C4C_PARAM_LIST_STRUCT_NAME* prev;
+C4C_STRUCT_END(C4C_PARAM_LIST_STRUCT_NAME)
 
 /*------------------------------------------------------------------------------
     linked list functions
@@ -57,7 +64,7 @@ C4C_STRUCT_END(C4C_PARAM_DLIST_STRUCT_NAME)
  * 
  * @param head The linked list head.
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head);
 
 /**
  * Insert a new entry after the specified head.
@@ -65,7 +72,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _init, C4C_STRUCT_DECLARE(C4C_PARA
  * @param head list Head to add it after.
  * @param new_list New entry to be added.
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* new_list);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list);
 
 /**
  * Insert a new entry before the specified head.
@@ -73,7 +80,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM
  * @param head list Head to add it before.
  * @param new_list New entry to be added.
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* new_list);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* new_list);
 
 /**
  * Deletes entry from list.
@@ -83,7 +90,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _add_tail, C4C_STRUCT_DECLARE(C4C_
  * @warning c4c_list_is_empty on entry does not return true after this, the entry 
  *          is in an undefined state (next and prev are set to NULL).
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* entry);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* entry);
 
 /**
  * Delete from one list and add as another's head.
@@ -91,7 +98,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _delete, C4C_STRUCT_DECLARE(C4C_PA
  * @param head The head that will precede our entry.
  * @param list The entry to move.
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* list);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
 
 /**
  * Delete from one list and add as another's tail.
@@ -99,7 +106,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _move, C4C_STRUCT_DECLARE(C4C_PARA
  * @param head The head that will follow our entry.
  * @param list The entry to move.
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* list);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
 
 /**
  * Join two lists.
@@ -107,7 +114,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _move_tail, C4C_STRUCT_DECLARE(C4C
  * @param head The place to add it in the first list.
  * @param list The new list to add.
  */
-C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_DLIST_STRUCT_NAME)* list);
+C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
 
 /* remove the custom version of this unless it's the user's */
 #ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
@@ -181,7 +188,7 @@ C4C_METHOD(C4C_PARAM_DLIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PA
 ------------------------------------------------------------------------------*/
 
 /* The list content (type variable_name;) (eg. int a;, char a; long b;, or custom structs */
-#undef C4C_PARAM_DLIST_CONTENT
+#undef C4C_PARAM_LIST_CONTENT
 
 /* The list struct name (name) (eg. my_int_list, x_list) */
-#undef C4C_PARAM_DLIST_STRUCT_NAME
+#undef C4C_PARAM_LIST_STRUCT_NAME

@@ -22,38 +22,26 @@
  * THE SOFTWARE.
  */
 
-#ifndef __C4C_STRUCT_H__
-#define __C4C_STRUCT_H__
+#include "c4c/config.h"
+#include "c4c/function.h"
+#include "c4c/struct.h"
 
-#include "c4c/c4c_config.h"
-#include "c4c/c4c_function.h"
-
-#ifdef _C4C_SETTINGS_STRUCT_NO_ALIAS
-
-#define C4C_STRUCT_DECLARE(name) struct name
-
-#define C4C_STRUCT_BEGIN(name) \
-	struct name {
-
-#define C4C_STRUCT_END(name) \
-	};
-
-#else
-
-#ifndef C4C_STRUCT_DECLARE
-#define C4C_STRUCT_DECLARE(name) name
+#ifndef C4C_METHOD
+#define C4C_METHOD(struct_name, prefix, rettype, suffix, ...) \
+	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), C4C_STRUCT_DECLARE(struct_name)* __VA_ARGS__)
 #endif
 
-#ifndef C4C_STRUCT_BEGIN
-#define C4C_STRUCT_BEGIN(name) \
-	typedef struct name {
+#ifndef C4C_METHOD_CALL
+#define C4C_METHOD_CALL(prefix, suffix, ...) \
+	C4C_FUNCTION_CALL(_C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 
-#ifndef C4C_STRUCT_END
-#define C4C_STRUCT_END(name) \
-	} name;
+#ifndef C4C_METHOD_INLINE
+#define C4C_METHOD_INLINE(prefix, rettype, suffix, ...) \
+	C4C_FUNCTION_INLINE(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 
-#endif /* _C4C_SETTINGS_NO_STRUCT_ALIAS */ 
-
-#endif /* __C4C_STRUCT_H__ */
+#ifndef C4C_METHOD_INLINE_CALL
+#define C4C_METHOD_INLINE_CALL(prefix, suffix, ...) \
+	C4C_FUNCTION_INLINE_CALL(_C4C_CONCAT(prefix, suffix), __VA_ARGS__)
+#endif

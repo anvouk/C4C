@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="f2" displayName="examples" projectFiles="true" kind="ROOT">
-      <itemPath>../../../examples/container_linked_list_example_c89.c</itemPath>
-      <itemPath>../../../examples/container_stack_example_c89.c</itemPath>
+    <logicalFolder name="f2" displayName="examples" projectFiles="true">
+      <itemPath>../../../examples/example_double_linked_list_c89.c</itemPath>
+      <itemPath>../../../examples/example_stack_literal_c89.c</itemPath>
+      <itemPath>../../../examples/example_stack_nullable_c89.c</itemPath>
     </logicalFolder>
-    <logicalFolder name="f1" displayName="include" projectFiles="true" kind="ROOT">
-      <logicalFolder name="f1"
-                     displayName="containers"
-                     projectFiles="true"
-                     kind="ROOT">
-        <itemPath>../../../include/c4c/c4c_container_helpers.h</itemPath>
-        <itemPath>../../../include/c4c/c4c_container_linked_list_decl.inl</itemPath>
-        <itemPath>../../../include/c4c/c4c_container_linked_list_impl.inl</itemPath>
-        <itemPath>../../../include/c4c/c4c_container_stack_decl.inl</itemPath>
-        <itemPath>../../../include/c4c/c4c_container_stack_impl.inl</itemPath>
+    <logicalFolder name="f1" displayName="include" projectFiles="true">
+      <logicalFolder name="f1" displayName="linked list" projectFiles="true">
+        <itemPath>../../../include/c4c/linked_list/double_list_decl.inl</itemPath>
+        <itemPath>../../../include/c4c/linked_list/double_list_impl.inl</itemPath>
       </logicalFolder>
-      <itemPath>../../../include/c4c/c4c_config.h</itemPath>
-      <itemPath>../../../include/c4c/c4c_function.h</itemPath>
-      <itemPath>../../../include/c4c/c4c_struct.h</itemPath>
+      <logicalFolder name="f2" displayName="stack" projectFiles="true">
+        <itemPath>../../../include/c4c/stack/literal_decl.inl</itemPath>
+        <itemPath>../../../include/c4c/stack/literal_impl.inl</itemPath>
+        <itemPath>../../../include/c4c/stack/nullable_decl.inl</itemPath>
+        <itemPath>../../../include/c4c/stack/nullable_impl.inl</itemPath>
+      </logicalFolder>
+      <itemPath>../../../include/c4c/config.h</itemPath>
+      <itemPath>../../../include/c4c/container_helpers.h</itemPath>
+      <itemPath>../../../include/c4c/function.h</itemPath>
+      <itemPath>../../../include/c4c/struct.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -42,44 +44,61 @@
           </incDir>
         </cTool>
       </compileType>
-      <item path="../../../examples/container_linked_list_example_c89.c"
+      <item path="../../../examples/example_double_linked_list_c89.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_config.h" ex="false" tool="3" flavor2="0">
+      <item path="../../../examples/example_stack_literal_c89.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_helpers.h"
+      <item path="../../../examples/example_stack_nullable_c89.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="../../../include/c4c/config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../../include/c4c/container_helpers.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_linked_list_decl.inl"
+      <item path="../../../include/c4c/function.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../../include/c4c/linked_list/double_list_decl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_linked_list_impl.inl"
+      <item path="../../../include/c4c/linked_list/double_list_impl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_stack_decl.inl"
+      <item path="../../../include/c4c/stack/literal_decl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_stack_impl.inl"
+      <item path="../../../include/c4c/stack/literal_impl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_function.h"
+      <item path="../../../include/c4c/stack/nullable_decl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_struct.h" ex="false" tool="3" flavor2="0">
+      <item path="../../../include/c4c/stack/nullable_impl.inl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/c4c/struct.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -102,49 +121,61 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="../../../examples/container_linked_list_example_c89.c"
+      <item path="../../../examples/example_double_linked_list_c89.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../../examples/container_stack_example_c89.c"
+      <item path="../../../examples/example_stack_literal_c89.c"
             ex="false"
             tool="0"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_config.h" ex="false" tool="3" flavor2="0">
+      <item path="../../../examples/example_stack_nullable_c89.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_helpers.h"
+      <item path="../../../include/c4c/config.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../../include/c4c/container_helpers.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_linked_list_decl.inl"
+      <item path="../../../include/c4c/function.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../../include/c4c/linked_list/double_list_decl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_linked_list_impl.inl"
+      <item path="../../../include/c4c/linked_list/double_list_impl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_stack_decl.inl"
+      <item path="../../../include/c4c/stack/literal_decl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_container_stack_impl.inl"
+      <item path="../../../include/c4c/stack/literal_impl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_function.h"
+      <item path="../../../include/c4c/stack/nullable_decl.inl"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="../../../include/c4c/c4c_struct.h" ex="false" tool="3" flavor2="0">
+      <item path="../../../include/c4c/stack/nullable_impl.inl"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../include/c4c/struct.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

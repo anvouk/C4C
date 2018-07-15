@@ -22,28 +22,39 @@
  * THE SOFTWARE.
  */
 
-#ifndef __C4C_FUNCTION_H__
-#define __C4C_FUNCTION_H__
+#include "c4c/config.h"
+#include "c4c/function.h"
 
-#include "c4c/c4c_config.h"
+#ifdef _C4C_SETTINGS_STRUCT_NO_ALIAS
 
-#ifndef C4C_CALL_CONVENTION
-#define C4C_CALL_CONVENTION
+#ifndef C4C_STRUCT_DECLARE
+#define C4C_STRUCT_DECLARE(name) struct name
 #endif
 
-#ifndef C4C_FUNCTION
-#define C4C_FUNCTION(rettype, name, ...) \
-	rettype C4C_CALL_CONVENTION name(__VA_ARGS__)
+#ifndef C4C_STRUCT_BEGIN
+#define C4C_STRUCT_BEGIN(name) \
+	struct name {
 #endif
 
-#ifndef C4C_FUNCTION_CALL
-#define C4C_FUNCTION_CALL(name, ...) \
-	name(__VA_ARGS__)
+#ifndef C4C_STRUCT_END
+#define C4C_STRUCT_END(name) \
+	};
 #endif
 
-#ifndef C4C_FUNCTION_INLINE
-#define C4C_FUNCTION_INLINE(rettype, name, ...) \
-	static rettype C4C_CALL_CONVENTION name(__VA_ARGS__)
+#else
+
+#ifndef C4C_STRUCT_DECLARE
+#define C4C_STRUCT_DECLARE(name) name
 #endif
 
-#endif /* __C4C_FUNCTION_H__ */
+#ifndef C4C_STRUCT_BEGIN
+#define C4C_STRUCT_BEGIN(name) \
+	typedef struct name {
+#endif
+
+#ifndef C4C_STRUCT_END
+#define C4C_STRUCT_END(name) \
+	} name;
+#endif
+
+#endif /* _C4C_SETTINGS_NO_STRUCT_ALIAS */ 

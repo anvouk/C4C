@@ -22,32 +22,31 @@
  * THE SOFTWARE.
  */
 
-#include "c4c/c4c_config.h"
-#include "c4c/c4c_function.h"
-#include "c4c/c4c_struct.h"
+#include "c4c/config.h"
+#include "c4c/function.h"
+#include "c4c/struct.h"
 
-#include "c4c/c4c_container_helpers.h"
+#include "c4c/container_helpers.h"
 
 #include <stddef.h> /* For NULL */
 #include <string.h> /* For memset() */
 
-/* for internal debug purposes */
-#if 0
-#define C4C_PARAM_STACK_CONTENT_TYPE int
-#define C4C_PARAM_STACK_MAX_SIZE 64
-#define C4C_PARAM_STACK_STRUCT_NAME test
+/*
+Parameters:
 
-C4C_STRUCT_BEGIN(C4C_PARAM_STACK_STRUCT_NAME)
-	size_t count;
-	C4C_PARAM_STACK_ELEM_TYPE elements[C4C_PARAM_STACK_MAX_SIZE];
-C4C_STRUCT_END(C4C_PARAM_STACK_STRUCT_NAME)
-#endif
+#define C4C_PARAM_STACK_STRUCT_NAME 
+#define C4C_PARAM_STACK_PREFIX 
+#define C4C_PARAM_STACK_CONTENT_TYPE 
+#define C4C_PARAM_STACK_MAX_SIZE 
+#define C4C_PARAM_STACK_NO_VALUE_TYPE 
+#define C4C_PARAM_STACK_NO_VALUE 
+*/
 
 /*------------------------------------------------------------------------------
     stack functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, void, _clear, stack)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, void, _clear, stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
@@ -55,7 +54,7 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, void, _clear, stack)
 	}
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_CONTENT_TYPE new_element)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, int, _push, stack, C4C_PARAM_STACK_CONTENT_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_STACK_MAX_SIZE)
 		return 0;
@@ -64,7 +63,7 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, int, _push, stack, C4C_PARAM_STACK_CONTE
 	return 1;
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_CONTENT_TYPE, _pop, stack)
+C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_CONTENT_TYPE, _pop, stack)
 {
 	if (stack->count == 0)
 		return (C4C_PARAM_STACK_CONTENT_TYPE)C4C_PARAM_STACK_NO_VALUE;
@@ -80,6 +79,9 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_CONTENT_TYPE, _pop, stac
 
 /* The stack struct name (name) (eg. my_int_stack, x_stack) */
 #undef C4C_PARAM_STACK_STRUCT_NAME
+
+/* The stack functions' prefix (name) (eg. my_stack) */
+#undef C4C_PARAM_STACK_PREFIX
 
 /* The stack element type (type) (eg. int, char, or a custom struct */
 #undef C4C_PARAM_STACK_CONTENT_TYPE
