@@ -13,6 +13,9 @@
     <Filter Include="include\linked list">
       <UniqueIdentifier>{570e8098-1888-41d3-9a3e-579e1659b00f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\vector">
+      <UniqueIdentifier>{8076d8e1-354d-4b85-a448-462ea2092a12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\c4c\config.h">
@@ -38,6 +41,9 @@
     <ClCompile Include="..\..\..\..\examples\example_double_linked_list_c89.c">
       <Filter>examples</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\examples\example_dyn_vector_c89.c">
+      <Filter>examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\include\c4c\linked_list\double_list_decl.inl">
@@ -57,6 +63,12 @@
     </None>
     <None Include="..\..\..\..\include\c4c\stack\nullable_decl.inl">
       <Filter>include\stack</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\vector\dyn_vector_impl.inl">
+      <Filter>include\vector</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\vector\dyn_vector_decl.inl">
+      <Filter>include\vector</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -35,4 +35,4 @@ Parameters:
 
 #define C4C_PARAM_STACK_NO_VALUE_TYPE void*
 #define C4C_PARAM_STACK_NO_VALUE NULL
-#include <c4c/stack/literal_decl.inl>
+#include "c4c/stack/literal_decl.inl"

@@ -26,11 +26,6 @@
 #include "c4c/function.h"
 #include "c4c/struct.h"
 
-/* we want a custom version of this unless the user has already a custom one */
-#ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#define C4C_METHOD(struct_name, rettype, suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(struct_name, suffix), __VA_ARGS__)
-#endif
 #include "c4c/container_helpers.h"
 
 #include <stddef.h> /* For size_t */
@@ -116,11 +111,6 @@ C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM
  * @param list The new list to add.
  */
 C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list);
-
-/* remove the custom version of this unless it's the user's */
-#ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#undef C4C_METHOD
-#endif
 
 /*------------------------------------------------------------------------------
     linked list generic functions

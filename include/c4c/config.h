@@ -47,11 +47,12 @@
 #define _C4C_STR_(x) #x
 #define _C4C_STR _C4C_STR_
 
-#define _C4C_CONCAT(a, b) a##b
+#define _C4C_CONCAT_(a, b) a##b
+#define _C4C_CONCAT _C4C_CONCAT_
 
 #define _C4C_VERSION_MAJOR 0
-#define _C4C_VERSION_MINOR 2
-#define _C4C_VERSION_PATCH 1
+#define _C4C_VERSION_MINOR 3
+#define _C4C_VERSION_PATCH 0
 #define _C4C_VERSION_STATE "alpha"
 
 #define _C4C_VERSION_STR \
@@ -62,5 +63,20 @@
 
 #define _C4C_VERSION_MAKE(maj, min, patch) \
 	((maj) << 16) | ((min) << 8) | (patch))
+
+/*------------------------------------------------------------------------------
+	C4C errors API
+------------------------------------------------------------------------------*/
+
+typedef enum {
+	/* <= 0 is an error. Check the function's doc for more info. */
+	c4c_success = 1
+	/* > 1 is a success but a corner case happened.
+	* Might not get what you expected. Check the function's doc for more info.
+	*/
+} c4c_res_t;
+
+#define c4c_succeeded(fn) \
+	((fn) >= c4c_success)
 
 #endif /* __C4C_CONFIG_H__ */

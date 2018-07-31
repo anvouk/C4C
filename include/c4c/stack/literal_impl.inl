@@ -46,7 +46,7 @@ Parameters:
     stack functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, void, _clear, stack)
+C4C_METHOD(C4C_PARAM_STACK_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
@@ -54,7 +54,7 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, void, _clear, st
 	}
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, int, _push, stack, C4C_PARAM_STACK_CONTENT_TYPE new_element)
+C4C_METHOD(C4C_PARAM_STACK_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack, C4C_PARAM_STACK_CONTENT_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_STACK_MAX_SIZE)
 		return 0;
@@ -63,7 +63,7 @@ C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, int, _push, stac
 	return 1;
 }
 
-C4C_METHOD(C4C_PARAM_STACK_STRUCT_NAME, C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_CONTENT_TYPE, _pop, stack)
+C4C_METHOD(C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack)
 {
 	if (stack->count == 0)
 		return (C4C_PARAM_STACK_CONTENT_TYPE)C4C_PARAM_STACK_NO_VALUE;

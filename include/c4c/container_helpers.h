@@ -27,8 +27,8 @@
 #include "c4c/struct.h"
 
 #ifndef C4C_METHOD
-#define C4C_METHOD(struct_name, prefix, rettype, suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), C4C_STRUCT_DECLARE(struct_name)* __VA_ARGS__)
+#define C4C_METHOD(prefix, rettype, suffix, ...) \
+	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 
 #ifndef C4C_METHOD_CALL

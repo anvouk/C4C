@@ -30,11 +30,6 @@
 #include "c4c/function.h"
 #include "c4c/struct.h"
 
-/* we want a custom version of this unless the user has already a custom one */
-#ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#define C4C_METHOD(prefix, rettype, suffix, ...) \
-	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)
-#endif
 #include "c4c/container_helpers.h"
 
 #include <stddef.h> /* For NULL */
@@ -128,16 +123,11 @@ C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM
 	C4C_METHOD_CALL(C4C_PARAM_LIST_PREFIX, _add_tail, head, list);
 }
 
-C4C_METHOD(C4C_PARAM_LIST_STRUCT_NAME, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
+C4C_METHOD(C4C_PARAM_LIST_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_LIST_STRUCT_NAME)* list)
 {
 	if (!c4c_list_is_empty(list))
 		_list_splice_(list, head);
 }
-
-/* remove the custom version of this unless it's the user's */
-#ifndef _C4C_SETTINGS_CONTAINER_LINKED_LIST_USE_CUSTOM_METHOD
-#undef C4C_METHOD
-#endif
 
 /* undef static functions macros */
 #undef _list_add_
