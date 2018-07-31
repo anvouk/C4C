@@ -28,7 +28,7 @@
 
 #include "c4c/container_helpers.h"
 
-#include <stddef.h> /* For size_t */
+#include <stddef.h> /* for size_t */
 
 /*
 Parameters:
@@ -40,6 +40,20 @@ Parameters:
 #define C4C_PARAM_NO_VALUE_TYPE 
 #define C4C_PARAM_NO_VALUE 
 */
+
+/**
+ * @file
+ * 
+ * A very standard and minimal LIFO stack.
+ * 
+ * <br><br>
+ * 
+ * Features:
+ * - Very lightweight and fast with a minimal yet expandable interface.
+ * - Fixed push/pop.
+ * - LIFO stack.
+ * - Memory pool.
+ */
 
 /*------------------------------------------------------------------------------
    stack struct definition
@@ -59,37 +73,37 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 
 /**
  * Clear the stack and prepare for new usage.
- * 
+ *
  * @warning Does NOT free the stack's elements.
  *
- * @param stack The LIFO stack.
+ * @param stack  The LIFO stack.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack);
 
 /**
  * Add a new tile to the end of the stack.
  *
- * @param stack         The LIFO stack.
- * @param new_element   The element to add.
- * 
- * @retval 0 if the stack is already full.
- * @retval 1 if the new_element was added successfully to the stack.
+ * @param new_element  The element to add.
+ * @param stack  The LIFO stack.
+ *
+ * @retval 0  The stack is already full.
+ * @retval 1  Success.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element);
+C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element);
 
 /**
  * Remove the element at the top of the stack and return it.
  *
- * @param stack The LIFO stack.
+ * @param stack  The LIFO stack.
  *
- * @return The element at the top of the stack.
- *         C4C_PARAM_NO_VALUE if the stack is empty.
+ * @return The element at the top of the stack. C4C_PARAM_NO_VALUE if the stack
+ *         is empty.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack);
 
 /**
  * Get the stack maximum capacity.
- * 
+ *
  * @return The stack max size.
  */
 C4C_METHOD_INLINE(C4C_PARAM_PREFIX, size_t, _capacity, void)
@@ -99,7 +113,7 @@ C4C_METHOD_INLINE(C4C_PARAM_PREFIX, size_t, _capacity, void)
 
 /**
  * Get the stack's content invalid value.
- * 
+ *
  * @return A value that signals that the stack is currently empty.
  */
 C4C_METHOD_INLINE(C4C_PARAM_PREFIX, C4C_PARAM_NO_VALUE_TYPE, _null_val, void)

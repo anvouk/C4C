@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#include <stddef.h>
+#include <stddef.h> /* for size_t */
 
 /*
 Parameters:

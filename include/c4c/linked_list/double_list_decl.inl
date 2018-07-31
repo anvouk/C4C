@@ -28,7 +28,7 @@
 
 #include "c4c/container_helpers.h"
 
-#include <stddef.h> /* For size_t */
+#include <stddef.h> /* for size_t */
 
 /*
 Parameters:
@@ -37,6 +37,19 @@ Parameters:
 #define C4C_PARAM_PREFIX 
 #define C4C_PARAM_CONTENT 
 */
+
+/**
+ * @file
+ * 
+ * Heavily inspired by Linux's double linked list.
+ * 
+ * <br><br>
+ * 
+ * Features:
+ * - Sequential access.
+ * - No heap allocations/deallocations.
+ * - No max capacity.
+ */
 
 /*------------------------------------------------------------------------------
    linked list struct definition
@@ -57,58 +70,58 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 
 /**
  * Prepare the linked list for usage.
- * 
- * @param head The linked list head.
+ *
+ * @param head  The linked list head.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head);
 
 /**
  * Insert a new entry after the specified head.
- * 
- * @param head list Head to add it after.
- * @param new_list New entry to be added.
+ *
+ * @param head      list Head to add it after.
+ * @param new_list  New entry to be added.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* new_list);
 
 /**
  * Insert a new entry before the specified head.
- * 
- * @param head list Head to add it before.
- * @param new_list New entry to be added.
+ *
+ * @param head      list Head to add it before.
+ * @param new_list  New entry to be added.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* new_list);
 
 /**
  * Deletes entry from list.
- * 
- * @param entry The element to delete from the list.
- * 
- * @warning c4c_list_is_empty on entry does not return true after this, the entry 
- *          is in an undefined state (next and prev are set to NULL).
+ *
+ * @param entry  The element to delete from the list.
+ *
+ * @warning c4c_list_is_empty on entry does not return true after this, the
+ *          entry is in an undefined state (next and prev are set to NULL).
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* entry);
 
 /**
  * Delete from one list and add as another's head.
- * 
- * @param head The head that will precede our entry.
- * @param list The entry to move.
+ *
+ * @param head  The head that will precede our entry.
+ * @param list  The entry to move.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list);
 
 /**
  * Delete from one list and add as another's tail.
- * 
- * @param head The head that will follow our entry.
- * @param list The entry to move.
+ *
+ * @param head  The head that will follow our entry.
+ * @param list  The entry to move.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list);
 
 /**
  * Join two lists.
- * 
- * @param head The place to add it in the first list.
- * @param list The new list to add.
+ *
+ * @param head  The place to add it in the first list.
+ * @param list  The new list to add.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list);
 
@@ -119,9 +132,9 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #ifndef c4c_list_is_empty
 /**
  * Test whether a list is empty.
- * 
- * @param head The list to test.
- * 
+ *
+ * @param head  The list to test.
+ *
  * @return 1 if the list is empty. 0 otherwise.
  */
 #define c4c_list_is_empty(head) \
@@ -131,9 +144,9 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #ifndef c4c_list_foreach
 /**
  * Iterate over a list.
- * 
- * @param head The head of the list.
- * @param pos The struct to use as a loop counter.
+ *
+ * @param head  The head of the list.
+ * @param pos   The struct to use as a loop counter.
  */
 #define c4c_list_foreach(head, pos) \
 	for (pos = (head)->next; pos != (head); pos = pos->next)
@@ -142,9 +155,9 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #ifndef c4c_list_foreach_backward
 /**
  * Iterate over a list backwards.
- * 
- * @param head The head of the list.
- * @param pos The struct to use as a loop counter.
+ *
+ * @param head  The head of the list.
+ * @param pos   The struct to use as a loop counter.
  */
 #define c4c_list_foreach_backward(head, pos) \
 	for (pos = (head)->prev; pos != (head); pos = pos->prev)
@@ -153,10 +166,10 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #ifndef c4c_list_foreach_safe
 /**
  * Iterate over a list safe against removal of list entry.
- * 
- * @param head The head of the list.
- * @param pos The struct to use as a loop counter.
- * @param n Another struct to use as temporary storage.
+ *
+ * @param head  The head of the list.
+ * @param pos   The struct to use as a loop counter.
+ * @param n     Another struct to use as temporary storage.
  */
 #define c4c_list_foreach_safe(head, pos, n) \
 	for (pos = (head)->next, n = pos->next; pos != (head); pos = n, n = pos->next)
@@ -165,10 +178,10 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #ifndef c4c_list_foreach_safe_backward
 /**
  * Iterate over a list backwards safe against removal of list entry.
- * 
- * @param head The head of the list.
- * @param pos The struct to use as a loop counter.
- * @param n	Another struct to use as temporary storage.
+ *
+ * @param head  The head of the list.
+ * @param pos   The struct to use as a loop counter.
+ * @param n     Another struct to use as temporary storage.
  */
 #define c4c_list_foreach_safe_backward(head, pos, n) \
 	for (pos = (head)->prev, n = pos->prev; pos != (head); pos = n, n = pos->prev)

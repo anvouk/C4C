@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#include <stddef.h>
+#include <stddef.h> /* for size_t */
 
 /*
 Parameters:
@@ -32,6 +32,15 @@ Parameters:
 #define C4C_PARAM_CONTENT_TYPE 
 #define C4C_PARAM_MAX_SIZE 
 */
+
+/**
+ * @file
+ *
+ * Shortcut of literal_stack to use with pointer values.
+ *
+ * Features:
+ * - Same as literal stack.
+ */
 
 #define C4C_PARAM_NO_VALUE_TYPE void*
 #define C4C_PARAM_NO_VALUE NULL

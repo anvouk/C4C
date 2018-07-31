@@ -38,6 +38,33 @@ Parameters:
 #define C4C_PARAM_CONTENT_TYPE 
 */
 
+/**
+ * @file
+ *
+ * Inspired by C++ std::vector (somewhat similiar interface) this container has
+ * been designed as a the de-facto C container (just like std::vector). Less
+ * clunky than linked-lists yet just as powerful.
+ *
+ * <br><br>
+ *
+ * Features:
+ * - Random access by index.
+ * - push/pop elements wherever you want to.
+ * - Heap allocation/deallocation ONLY upon initialization and freeing.
+ * - Resizable.
+ * - Copyable (to another vector).
+ * - Extremely fast elements insertion and deletion without any sort of memory
+ *   management (as long as you are ok with having some elements shuffled every
+ *   time you call such functions)
+ * - The same element may not be at the same index forever (see point above).
+ *
+ * @warning Beware of looping the vector with its size as the upper limit.
+ *          Pushing and popping elements during such loops WILL change the
+ *          vector's size and consequentially impact the loop behavior. It is
+ *          recommended to store the vector's size in a temporary variable and
+ *          use this one as the upper loop's limit. See vector example.
+ */
+
 /*------------------------------------------------------------------------------
 	vector struct definition
 ------------------------------------------------------------------------------*/

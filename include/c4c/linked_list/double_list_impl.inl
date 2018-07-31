@@ -32,7 +32,7 @@
 
 #include "c4c/container_helpers.h"
 
-#include <stddef.h> /* For NULL */
+#include <stddef.h> /* for NULL */
 
 /*
 Parameters:

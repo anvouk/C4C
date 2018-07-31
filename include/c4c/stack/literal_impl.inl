@@ -28,8 +28,8 @@
 
 #include "c4c/container_helpers.h"
 
-#include <stddef.h> /* For NULL */
-#include <string.h> /* For memset() */
+#include <stddef.h> /* for NULL */
+#include <string.h> /* for memset() */
 
 /*
 Parameters:
@@ -54,7 +54,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_N
 	}
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element)
+C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_MAX_SIZE)
 		return 0;
