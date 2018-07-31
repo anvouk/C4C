@@ -34,42 +34,42 @@
 /*
 Parameters:
 
-#define C4C_PARAM_STACK_STRUCT_NAME 
-#define C4C_PARAM_STACK_PREFIX 
-#define C4C_PARAM_STACK_CONTENT_TYPE 
-#define C4C_PARAM_STACK_MAX_SIZE 
-#define C4C_PARAM_STACK_NO_VALUE_TYPE 
-#define C4C_PARAM_STACK_NO_VALUE 
+#define C4C_PARAM_STRUCT_NAME 
+#define C4C_PARAM_PREFIX 
+#define C4C_PARAM_CONTENT_TYPE 
+#define C4C_PARAM_MAX_SIZE 
+#define C4C_PARAM_NO_VALUE_TYPE 
+#define C4C_PARAM_NO_VALUE 
 */
 
 /*------------------------------------------------------------------------------
     stack functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_STACK_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack)
+C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
-		memset(stack->elements, 0, sizeof(C4C_PARAM_STACK_CONTENT_TYPE) * C4C_PARAM_STACK_MAX_SIZE);
+		memset(stack->elements, 0, sizeof(C4C_PARAM_CONTENT_TYPE) * C4C_PARAM_MAX_SIZE);
 	}
 }
 
-C4C_METHOD(C4C_PARAM_STACK_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack, C4C_PARAM_STACK_CONTENT_TYPE new_element)
+C4C_METHOD(C4C_PARAM_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element)
 {
-	if (stack->count >= C4C_PARAM_STACK_MAX_SIZE)
+	if (stack->count >= C4C_PARAM_MAX_SIZE)
 		return 0;
 	stack->elements[stack->count] = new_element;
 	stack->count++;
 	return 1;
 }
 
-C4C_METHOD(C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack)
+C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
 {
 	if (stack->count == 0)
-		return (C4C_PARAM_STACK_CONTENT_TYPE)C4C_PARAM_STACK_NO_VALUE;
+		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_NO_VALUE;
 	stack->count--;
-	C4C_PARAM_STACK_CONTENT_TYPE bottom = stack->elements[stack->count];
-	stack->elements[stack->count] = (C4C_PARAM_STACK_CONTENT_TYPE)C4C_PARAM_STACK_NO_VALUE;
+	C4C_PARAM_CONTENT_TYPE bottom = stack->elements[stack->count];
+	stack->elements[stack->count] = (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_NO_VALUE;
 	return bottom;
 }
 
@@ -78,19 +78,19 @@ C4C_METHOD(C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_CONTENT_TYPE, _pop, C4C_STRUC
 ------------------------------------------------------------------------------*/
 
 /* The stack struct name (name) (eg. my_int_stack, x_stack) */
-#undef C4C_PARAM_STACK_STRUCT_NAME
+#undef C4C_PARAM_STRUCT_NAME
 
 /* The stack functions' prefix (name) (eg. my_stack) */
-#undef C4C_PARAM_STACK_PREFIX
+#undef C4C_PARAM_PREFIX
 
 /* The stack element type (type) (eg. int, char, or a custom struct */
-#undef C4C_PARAM_STACK_CONTENT_TYPE
+#undef C4C_PARAM_CONTENT_TYPE
 
 /* The stack max size (size_t) (eg. 256, 400) */
-#undef C4C_PARAM_STACK_MAX_SIZE
+#undef C4C_PARAM_MAX_SIZE
 
-/* The type of C4C_PARAM_STACK_NO_VALUE (type) (eg. void*, int) */
-#undef C4C_PARAM_STACK_NO_VALUE_TYPE
+/* The type of C4C_PARAM_NO_VALUE (type) (eg. void*, int) */
+#undef C4C_PARAM_NO_VALUE_TYPE
 
 /* The value that indicates that there's no value (value) (eg. NULL, -1, -9999) */
-#undef C4C_PARAM_STACK_NO_VALUE
+#undef C4C_PARAM_NO_VALUE

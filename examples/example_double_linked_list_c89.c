@@ -30,18 +30,18 @@
 /* FAC: Enable/Disable/Change certain features by defining c4c settings macros. */
 
 /* 1. Declare the container interface in a .h file. */
-#define C4C_PARAM_LIST_CONTENT int a; int b;
-#define C4C_PARAM_LIST_PREFIX my_list
-#define C4C_PARAM_LIST_STRUCT_NAME MY_LIST
+#define C4C_PARAM_STRUCT_NAME MY_LIST
+#define C4C_PARAM_PREFIX my_list
+#define C4C_PARAM_CONTENT int a; int b;
 #include "c4c/linked_list/double_list_decl.inl"
 
 /* 2. Declare the container implementation in a .c file or in wherever you 
  *    want it to be. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
-#define C4C_PARAM_LIST_CONTENT int a; int b;
-#define C4C_PARAM_LIST_PREFIX my_list
-#define C4C_PARAM_LIST_STRUCT_NAME MY_LIST
+#define C4C_PARAM_STRUCT_NAME MY_LIST
+#define C4C_PARAM_PREFIX my_list
+#define C4C_PARAM_CONTENT int a; int b;
 #include "c4c/linked_list/double_list_impl.inl"
 
 /* 4. Magic happens. You can now use the container for your type(s) :) */

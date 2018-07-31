@@ -33,12 +33,12 @@
 /*
 Parameters:
 
-#define C4C_PARAM_STACK_STRUCT_NAME 
-#define C4C_PARAM_STACK_PREFIX 
-#define C4C_PARAM_STACK_CONTENT_TYPE 
-#define C4C_PARAM_STACK_MAX_SIZE 
-#define C4C_PARAM_STACK_NO_VALUE_TYPE 
-#define C4C_PARAM_STACK_NO_VALUE 
+#define C4C_PARAM_STRUCT_NAME 
+#define C4C_PARAM_PREFIX 
+#define C4C_PARAM_CONTENT_TYPE 
+#define C4C_PARAM_MAX_SIZE 
+#define C4C_PARAM_NO_VALUE_TYPE 
+#define C4C_PARAM_NO_VALUE 
 */
 
 /*------------------------------------------------------------------------------
@@ -48,10 +48,10 @@ Parameters:
 /**
  * LIFO stack.
  */
-C4C_STRUCT_BEGIN(C4C_PARAM_STACK_STRUCT_NAME)
+C4C_STRUCT_BEGIN(C4C_PARAM_STRUCT_NAME)
 	size_t count;
-	C4C_PARAM_STACK_CONTENT_TYPE elements[C4C_PARAM_STACK_MAX_SIZE];
-C4C_STRUCT_END(C4C_PARAM_STACK_STRUCT_NAME)
+	C4C_PARAM_CONTENT_TYPE elements[C4C_PARAM_MAX_SIZE];
+C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 
 /*------------------------------------------------------------------------------
     stack functions
@@ -64,7 +64,7 @@ C4C_STRUCT_END(C4C_PARAM_STACK_STRUCT_NAME)
  *
  * @param stack The LIFO stack.
  */
-C4C_METHOD(C4C_PARAM_STACK_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack);
+C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack);
 
 /**
  * Add a new tile to the end of the stack.
@@ -75,7 +75,7 @@ C4C_METHOD(C4C_PARAM_STACK_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_ST
  * @retval 0 if the stack is already full.
  * @retval 1 if the new_element was added successfully to the stack.
  */
-C4C_METHOD(C4C_PARAM_STACK_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack, C4C_PARAM_STACK_CONTENT_TYPE new_element);
+C4C_METHOD(C4C_PARAM_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element);
 
 /**
  * Remove the element at the top of the stack and return it.
@@ -83,18 +83,18 @@ C4C_METHOD(C4C_PARAM_STACK_PREFIX, int, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STAC
  * @param stack The LIFO stack.
  *
  * @return The element at the top of the stack.
- *         C4C_PARAM_STACK_NO_VALUE if the stack is empty.
+ *         C4C_PARAM_NO_VALUE if the stack is empty.
  */
-C4C_METHOD(C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STACK_STRUCT_NAME)* stack);
+C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack);
 
 /**
  * Get the stack maximum capacity.
  * 
  * @return The stack max size.
  */
-C4C_METHOD_INLINE(C4C_PARAM_STACK_PREFIX, size_t, _capacity, void)
+C4C_METHOD_INLINE(C4C_PARAM_PREFIX, size_t, _capacity, void)
 {
-	return (size_t)C4C_PARAM_STACK_MAX_SIZE;
+	return (size_t)C4C_PARAM_MAX_SIZE;
 }
 
 /**
@@ -102,9 +102,9 @@ C4C_METHOD_INLINE(C4C_PARAM_STACK_PREFIX, size_t, _capacity, void)
  * 
  * @return A value that signals that the stack is currently empty.
  */
-C4C_METHOD_INLINE(C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_NO_VALUE_TYPE, _null_val, void)
+C4C_METHOD_INLINE(C4C_PARAM_PREFIX, C4C_PARAM_NO_VALUE_TYPE, _null_val, void)
 {
-	return (C4C_PARAM_STACK_NO_VALUE_TYPE)C4C_PARAM_STACK_NO_VALUE;
+	return (C4C_PARAM_NO_VALUE_TYPE)C4C_PARAM_NO_VALUE;
 }
 
 /*------------------------------------------------------------------------------
@@ -112,19 +112,19 @@ C4C_METHOD_INLINE(C4C_PARAM_STACK_PREFIX, C4C_PARAM_STACK_NO_VALUE_TYPE, _null_v
 ------------------------------------------------------------------------------*/
 
 /* The stack struct name (name) (eg. my_int_stack, x_stack) */
-#undef C4C_PARAM_STACK_STRUCT_NAME
+#undef C4C_PARAM_STRUCT_NAME
 
 /* The stack functions' prefix (name) (eg. my_stack) */
-#undef C4C_PARAM_STACK_PREFIX
+#undef C4C_PARAM_PREFIX
 
 /* The stack element type (type) (eg. int, char, or a custom struct) */
-#undef C4C_PARAM_STACK_CONTENT_TYPE
+#undef C4C_PARAM_CONTENT_TYPE
 
 /* The stack max size (size_t) (eg. 256, 400) */
-#undef C4C_PARAM_STACK_MAX_SIZE
+#undef C4C_PARAM_MAX_SIZE
 
-/* The type of C4C_PARAM_STACK_NO_VALUE (type) (eg. void*, int) */
-#undef C4C_PARAM_STACK_NO_VALUE_TYPE
+/* The type of C4C_PARAM_NO_VALUE (type) (eg. void*, int) */
+#undef C4C_PARAM_NO_VALUE_TYPE
 
 /* The value that indicates that there's no value (value) (eg. NULL, -1, -9999) */
-#undef C4C_PARAM_STACK_NO_VALUE
+#undef C4C_PARAM_NO_VALUE

@@ -45,20 +45,20 @@ rettype __stdcall name(__VA_ARGS__)
 */
 
 /* 2. Declare the container interface in a .h file. */
-#define C4C_PARAM_STACK_STRUCT_NAME MY_TYPE_STACK
-#define C4C_PARAM_STACK_PREFIX my_type_stack
-#define C4C_PARAM_STACK_CONTENT_TYPE my_type*
-#define C4C_PARAM_STACK_MAX_SIZE 32
+#define C4C_PARAM_STRUCT_NAME MY_TYPE_STACK
+#define C4C_PARAM_PREFIX my_type_stack
+#define C4C_PARAM_CONTENT_TYPE my_type*
+#define C4C_PARAM_MAX_SIZE 32
 #include "c4c/stack/nullable_decl.inl"
 
 /* 3. Declare the container implementation in a .c file or in wherever you
 *     want it to be. Make sure the macro params for the implementation have the
 *     same values as the interface ones.
 */
-#define C4C_PARAM_STACK_STRUCT_NAME MY_TYPE_STACK
-#define C4C_PARAM_STACK_PREFIX my_type_stack
-#define C4C_PARAM_STACK_CONTENT_TYPE my_type*
-#define C4C_PARAM_STACK_MAX_SIZE 32
+#define C4C_PARAM_STRUCT_NAME MY_TYPE_STACK
+#define C4C_PARAM_PREFIX my_type_stack
+#define C4C_PARAM_CONTENT_TYPE my_type*
+#define C4C_PARAM_MAX_SIZE 32
 #include "c4c/stack/nullable_impl.inl"
 
 /* 4. Magic happens. You can now use the container for your type :) */

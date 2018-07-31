@@ -27,12 +27,12 @@
 /*
 Parameters:
 
-#define C4C_PARAM_STACK_STRUCT_NAME 
-#define C4C_PARAM_STACK_PREFIX 
-#define C4C_PARAM_STACK_CONTENT_TYPE 
-#define C4C_PARAM_STACK_MAX_SIZE 
+#define C4C_PARAM_STRUCT_NAME 
+#define C4C_PARAM_PREFIX 
+#define C4C_PARAM_CONTENT_TYPE 
+#define C4C_PARAM_MAX_SIZE 
 */
 
-#define C4C_PARAM_STACK_NO_VALUE_TYPE void*
-#define C4C_PARAM_STACK_NO_VALUE NULL
+#define C4C_PARAM_NO_VALUE_TYPE void*
+#define C4C_PARAM_NO_VALUE NULL
 #include "c4c/stack/literal_impl.inl"

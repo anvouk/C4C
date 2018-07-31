@@ -40,24 +40,24 @@
 */
 
 /* 2. Declare the container interface in a .h file. */
-#define C4C_PARAM_STACK_STRUCT_NAME MY_STACK
-#define C4C_PARAM_STACK_PREFIX my_stack
-#define C4C_PARAM_STACK_CONTENT_TYPE int
-#define C4C_PARAM_STACK_MAX_SIZE 64
-#define C4C_PARAM_STACK_NO_VALUE_TYPE int
-#define C4C_PARAM_STACK_NO_VALUE -1
+#define C4C_PARAM_STRUCT_NAME MY_STACK
+#define C4C_PARAM_PREFIX my_stack
+#define C4C_PARAM_CONTENT_TYPE int
+#define C4C_PARAM_MAX_SIZE 64
+#define C4C_PARAM_NO_VALUE_TYPE int
+#define C4C_PARAM_NO_VALUE -1
 #include "c4c/stack/literal_decl.inl"
 
 /* 3. Declare the container implementation in a .c file or in wherever you
  *    want it to be. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
-#define C4C_PARAM_STACK_STRUCT_NAME MY_STACK
-#define C4C_PARAM_STACK_PREFIX my_stack
-#define C4C_PARAM_STACK_CONTENT_TYPE int
-#define C4C_PARAM_STACK_MAX_SIZE 64
-#define C4C_PARAM_STACK_NO_VALUE_TYPE int
-#define C4C_PARAM_STACK_NO_VALUE -1
+#define C4C_PARAM_STRUCT_NAME MY_STACK
+#define C4C_PARAM_PREFIX my_stack
+#define C4C_PARAM_CONTENT_TYPE int
+#define C4C_PARAM_MAX_SIZE 64
+#define C4C_PARAM_NO_VALUE_TYPE int
+#define C4C_PARAM_NO_VALUE -1
 #include "c4c/stack/literal_impl.inl"
 
 /* 4. Magic happens. You can now use the container for your type :) */
