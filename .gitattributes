@@ -1,0 +1,3 @@
+$ cat .gitattributes
+*.h linguist-language=C
+*.inl linguist-language=C
