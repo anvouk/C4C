@@ -142,14 +142,17 @@
 #define _C4C_VERSION_PATCH 0
 #define _C4C_VERSION_STATE "beta"
 
-#define _C4C_VERSION_STR \
-	_C4C_STR(_C4C_VERSION_MAJOR) "." \
-	_C4C_STR(_C4C_VERSION_MINOR) "." \
-	_C4C_STR(_C4C_VERSION_PATCH) "-" \
+#define _C4C_VERSION_STR_(major, minor, patch) \
+	_C4C_STR(major) "." \
+	_C4C_STR(minor) "." \
+	_C4C_STR(patch) "-" \
 	_C4C_VERSION_STATE
 
-#define _C4C_VERSION_MAKE(maj, min, patch) \
-	((maj) << 16) | ((min) << 8) | (patch))
+#define _C4C_VERSION_STR \
+	_C4C_VERSION_STR_(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
+
+#define _C4C_VERSION_MAKE(major, minor, patch) \
+	((major) << 16) | ((minor) << 8) | (patch))
 
 /*------------------------------------------------------------------------------
 	C4C errors API
