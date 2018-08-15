@@ -139,7 +139,7 @@
 
 #define _C4C_VERSION_MAJOR 0
 #define _C4C_VERSION_MINOR 3
-#define _C4C_VERSION_PATCH 0
+#define _C4C_VERSION_PATCH 1
 #define _C4C_VERSION_STATE "beta"
 
 #define _C4C_VERSION_STR_(major, minor, patch) \

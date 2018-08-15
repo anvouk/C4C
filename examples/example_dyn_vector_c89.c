@@ -58,16 +58,16 @@ rettype __stdcall name(__VA_ARGS__)
 int main(int argc, char* argv[])
 {
 	/* variables */
-	size_t i, j;
+	size_t i;
 	c4c_res_t res;
 	TestVector vec;
 	
-	/* init the vector and allocate 64 int slots */
+	/* init the vector and allocate 20 int slots */
 	if (!c4c_succeeded(res = tvec_init(&vec, 20))) {
 		printf("couldn't init vector (%d)\n", res);
 	}
 	
-	/* add elements */
+	/* fill vector */
 	for (i = 0; i < vec.capacity; i++) {
 		if (!c4c_succeeded(res = tvec_push_back(&vec, (int)i))) {
 			printf("couldn't add element (%d)\n", res);
@@ -75,6 +75,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	/* print vector status */
 	printf("vec: %d/%d\n", vec.size, vec.capacity);
 	for (i = 0; i < vec.size; i++) {
 		printf("[%d] %d\n", i, vec.data[i]);
@@ -82,21 +83,19 @@ int main(int argc, char* argv[])
 
 	tvec_resize(&vec, 30);
 
-	/* WARNING: remember to save the vector's size because every push/pop function 
-	 * will automatically increment/decrement it and the loop might not end up 
-	 * working as expected.
-	 */
-	j = vec.size;
-	for (i = j; i < vec.capacity; i++) {
+	/* fill vector's new slots */
+	for (i = vec.size; i < vec.capacity; i++) {
 		if (!c4c_succeeded(res = tvec_push_back(&vec, i))) {
 			printf("couldn't add element (%d)\n", res);
 			break;
 		}
 	}
 
+	/* remove some elements */
 	tvec_pop_at(&vec, 15);
 	tvec_pop_at(&vec, 20);
 
+	/* print new vector status */
 	printf("vec: %d/%d\n", vec.size, vec.capacity);
 	for (i = 0; i < vec.size; i++) {
 		printf("[%d] %d\n", i, vec.data[i]);
