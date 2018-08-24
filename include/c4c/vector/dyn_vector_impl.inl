@@ -31,13 +31,27 @@
 #include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for malloc(), realloc(), free() */
 
+/*------------------------------------------------------------------------------
+	params
+------------------------------------------------------------------------------*/
+
 /*
 Parameters:
 
-#define C4C_PARAM_STRUCT_NAME
-#define C4C_PARAM_PREFIX
-#define C4C_PARAM_CONTENT_TYPE
+#define C4C_PARAM_STRUCT_NAME 
+#define C4C_PARAM_PREFIX 
+#define C4C_PARAM_CONTENT_TYPE 
 */
+
+/*
+Optional parameters:
+
+#define C4C_PARAM_OPT_ALLOC_BLOCK 
+*/
+
+#ifndef C4C_PARAM_OPT_ALLOC_BLOCK
+#  define C4C_PARAM_OPT_ALLOC_BLOCK 4
+#endif
 
 /*------------------------------------------------------------------------------
     vector functions implementation
@@ -70,6 +84,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _free, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NA
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t capacity)
 {
 	size_t old_capacity = vec->capacity;
+	if (vec->capacity == capacity)
+		return 3;
 	vec->data = realloc(vec->data, sizeof(C4C_PARAM_CONTENT_TYPE) * capacity);
 	if (!vec->data)
 		return 0;
@@ -84,7 +100,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_ST
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* from, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* to)
 {
 	size_t i;
-	if (from->size >= to->capacity) return 0;
+	if (from->size >= to->capacity)
+		C4C_METHOD_CALL(C4C_PARAM_PREFIX, _resize, to, from->size);
 	for (i = 0; i < from->size; i++) {
 		to->data[i] = from->data[i];
 	}
@@ -95,7 +112,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARA
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element)
 {
 	if (vec->size >= vec->capacity)
-		return 0;
+		if (!c4c_succeeded(C4C_METHOD_CALL(C4C_PARAM_PREFIX, _resize, vec, vec->capacity + C4C_PARAM_OPT_ALLOC_BLOCK)))
+			return 0;
 	vec->data[vec->size] = element;
 	vec->size++;
 	return 1;
@@ -104,9 +122,10 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element, size_t index)
 {
 	if (index >= vec->capacity)
-		return 0;
-	if (vec->size >= vec->capacity)
 		return -1;
+	if (vec->size >= vec->capacity)
+		if (!c4c_succeeded(C4C_METHOD_CALL(C4C_PARAM_PREFIX, _resize, vec, vec->capacity + C4C_PARAM_OPT_ALLOC_BLOCK)))
+			return 0;
 	/* Move the element at the specified index to the new last place the insert
 	 * the new element in the right spot. */
 	vec->data[vec->size] = vec->data[index];
@@ -145,3 +164,10 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_ST
 
 /* The vector element type (type) (eg. int, char, or a custom struct) */
 #undef C4C_PARAM_CONTENT_TYPE
+
+/*------------------------------------------------------------------------------
+	undef header optional params
+------------------------------------------------------------------------------*/
+
+/* Overcommit memory during allocations (size_t > 0) (eg. 1, 4, 10) */
+#undef C4C_PARAM_OPT_ALLOC_BLOCK

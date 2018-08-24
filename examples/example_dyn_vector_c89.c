@@ -54,6 +54,8 @@ rettype __stdcall name(__VA_ARGS__)
 #define C4C_PARAM_CONTENT_TYPE int
 #include "c4c/vector/dyn_vector_impl.inl"
 
+void dump_vec(const TestVector* vec);
+
 /* 4. Magic happens. You can now use the container for your type :) */
 int main(int argc, char* argv[])
 {
@@ -61,13 +63,15 @@ int main(int argc, char* argv[])
 	size_t i;
 	c4c_res_t res;
 	TestVector vec;
+
+	printf("C4C %s | examples/example_dyn_vector_c89.c\n", _C4C_VERSION_STR);
 	
 	/* init the vector and allocate 20 int slots */
 	if (!c4c_succeeded(res = tvec_init(&vec, 20))) {
 		printf("couldn't init vector (%d)\n", res);
 	}
 	
-	/* fill vector */
+	/* fill vector (no allocations performed) */
 	for (i = 0; i < vec.capacity; i++) {
 		if (!c4c_succeeded(res = tvec_push_back(&vec, (int)i))) {
 			printf("couldn't add element (%d)\n", res);
@@ -75,32 +79,42 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	/* print vector status */
-	printf("vec: %d/%d\n", vec.size, vec.capacity);
-	for (i = 0; i < vec.size; i++) {
-		printf("[%d] %d\n", i, vec.data[i]);
+	dump_vec(&vec);
+
+	/* since the vector's allocated slots have been filled, grow the vector by 
+	 * the number of elements specified in the optional header param 
+	 * C4C_PARAM_OPT_ALLOC_BLOCK (default is set to 4 so allocate 4 new slots).
+	 */
+	if (!c4c_succeeded(res = tvec_push_back(&vec, (int)100))) {
+		printf("couldn't add element (%d)\n", res);
 	}
+
+	/* If C4C_PARAM_OPT_ALLOC_BLOCK > 1 this won't allocate */
+	if (!c4c_succeeded(res = tvec_push_back(&vec, (int)101))) {
+		printf("couldn't add element (%d)\n", res);
+	}
+
+	dump_vec(&vec);
 
 	tvec_resize(&vec, 30);
 
-	/* fill vector's new slots */
-	for (i = vec.size; i < vec.capacity; i++) {
-		if (!c4c_succeeded(res = tvec_push_back(&vec, i))) {
-			printf("couldn't add element (%d)\n", res);
-			break;
-		}
-	}
-
 	/* remove some elements */
+	tvec_pop_at(&vec, 6);
 	tvec_pop_at(&vec, 15);
-	tvec_pop_at(&vec, 20);
 
-	/* print new vector status */
-	printf("vec: %d/%d\n", vec.size, vec.capacity);
-	for (i = 0; i < vec.size; i++) {
-		printf("[%d] %d\n", i, vec.data[i]);
-	}
+	dump_vec(&vec);
+
+	tvec_free(&vec);
 
 	getchar();
 	return EXIT_SUCCESS;
+}
+
+void dump_vec(const TestVector* vec)
+{
+	size_t i;
+	printf("\nvec: %d/%d\n", vec->size, vec->capacity);
+	for (i = 0; i < vec->size; i++) {
+		printf("[%.2d] %d\n", i, vec->data[i]);
+	}
 }

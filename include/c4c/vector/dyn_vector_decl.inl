@@ -30,14 +30,6 @@
 
 #include <stddef.h> /* for size_t */
 
-/*
-Parameters:
-
-#define C4C_PARAM_STRUCT_NAME 
-#define C4C_PARAM_PREFIX 
-#define C4C_PARAM_CONTENT_TYPE 
-*/
-
 /**
  * @file
  *
@@ -64,6 +56,28 @@ Parameters:
  *          recommended to store the vector's size in a temporary variable and
  *          use this one as the upper loop's limit. See vector example.
  */
+
+ /*------------------------------------------------------------------------------
+	params
+ ------------------------------------------------------------------------------*/
+
+ /*
+ Parameters:
+
+ #define C4C_PARAM_STRUCT_NAME 
+ #define C4C_PARAM_PREFIX 
+ #define C4C_PARAM_CONTENT_TYPE 
+ */
+
+ /*
+ Optional parameters:
+
+ #define C4C_PARAM_OPT_ALLOC_BLOCK 
+ */
+
+#ifndef C4C_PARAM_OPT_ALLOC_BLOCK
+#  define C4C_PARAM_OPT_ALLOC_BLOCK 4
+#endif
 
 /*------------------------------------------------------------------------------
 	vector struct definition
@@ -101,26 +115,30 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRU
 C4C_METHOD(C4C_PARAM_PREFIX, void, _free, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec);
 
 /**
- * Resize the vector. Either Shrink it or grow it (return value may change).
+ * Resize the vector. Either shrink it or grow it (return value may change).
  *
  * @param vec       The vector.
  * @param capacity  The new capacity.
+ * 
+ * @note Ignores C4C_PARAM_OPT_ALLOC_BLOCK.
  *
  * @retval 0  realloc failed.
  * @retval 1  Success.
  * @retval 2  Success but, due to the shrinking of the vector, some elements
  *            were discarded.
+ * @retval 3  Success but nothing happened (new capacity == old capacity).
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t capacity);
 
 /**
  * Copy the entire content of the first vector into the second one.
+ * 
+ * @note The destination vector may grow in case the source's size is bigger than 
+ *       the destination's capacity.
  *
  * @param from  The source vector.
  * @param to    The destination vector.
  *
- * @retval 0  The destination vector's capacity isn't large enough to allow a
- *            full copy. Abort.
  * @retval 1  Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* from, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* to);
@@ -131,7 +149,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARA
  * @param vec      The vector.
  * @param element  The element to add.
  *
- * @retval 0  Not enough space. The vector is full.
+ * @retval 0  Memory allocation/reallocation failed.
  * @retval 1  Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element);
@@ -148,8 +166,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM
  * @param element  The element to add.
  * @param index    Where to add the new element.
  *
- * @retval -1  Not enough space. The vector is already full.
- * @retval 0   Index out of bounds.
+ * @retval -1  Index out of bounds.
+ * @retval 0   Memory allocation/reallocation failed.
  * @retval 1   Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element, size_t index);
@@ -193,3 +211,10 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_ST
 
 /* The vector element type (type) (eg. int, char, or a custom struct) */
 #undef C4C_PARAM_CONTENT_TYPE
+
+/*------------------------------------------------------------------------------
+	undef header optional params
+------------------------------------------------------------------------------*/
+
+/* Overcommit memory during allocations (size_t > 0) (eg. 1, 4, 10) */
+#undef C4C_PARAM_OPT_ALLOC_BLOCK
