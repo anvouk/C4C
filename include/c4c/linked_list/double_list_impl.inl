@@ -23,6 +23,10 @@
  */
 
 /*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
+/*
  * This header has been heavily inspired by linux's linked list
  */
 
@@ -33,14 +37,6 @@
 #include "c4c/container_helpers.h"
 
 #include <stddef.h> /* for NULL */
-
-/*
-Parameters:
-
-#define C4C_PARAM_STRUCT_NAME 
-#define C4C_PARAM_PREFIX 
-#define C4C_PARAM_CONTENT 
-*/
 
 /*------------------------------------------------------------------------------
     linked list static functions
@@ -135,14 +131,9 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #undef _list_splice_
 
 /*------------------------------------------------------------------------------
-    undef header params
+    undef header params (see declaration file for docs)
 ------------------------------------------------------------------------------*/
 
-/* The list struct name (name) (eg. my_int_list, x_list) */
 #undef C4C_PARAM_STRUCT_NAME
-
-/* The list functions' prefix (name) (eg. my_list) */
 #undef C4C_PARAM_PREFIX 
-
-/* The list content (type variable_name;) (eg. int a;, char a; long b;, or custom structs */
 #undef C4C_PARAM_CONTENT

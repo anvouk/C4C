@@ -22,6 +22,24 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
+/**
+ * Container:
+ * 		LIFO stack.
+ *
+ * Brief description:
+ * 		A standard and minimal LIFO stack implementation.
+ *
+ * Features:
+ * - Very lightweight and fast with a minimal yet expandable interface.
+ * - Fixed push/pop.
+ * - LIFO stack.
+ * - Memory pool.
+ */
+
 #include "c4c/config.h"
 #include "c4c/function.h"
 #include "c4c/struct.h"
@@ -30,6 +48,10 @@
 
 #include <stddef.h> /* for size_t */
 
+/*------------------------------------------------------------------------------
+	params
+------------------------------------------------------------------------------*/
+
 /*
 Parameters:
 
@@ -37,23 +59,17 @@ Parameters:
 #define C4C_PARAM_PREFIX 
 #define C4C_PARAM_CONTENT_TYPE 
 #define C4C_PARAM_MAX_SIZE 
-#define C4C_PARAM_NO_VALUE_TYPE 
-#define C4C_PARAM_NO_VALUE 
 */
 
-/**
- * Container:
- * 		LIFO stack.
- * 
- * Brief description:
- * 		A standard and minimal LIFO stack implementation.
- * 
- * Features:
- * - Very lightweight and fast with a minimal yet expandable interface.
- * - Fixed push/pop.
- * - LIFO stack.
- * - Memory pool.
- */
+/*
+Optional parameters:
+
+#define C4C_PARAM_OPT_NO_VALUE 
+*/
+
+#ifndef C4C_PARAM_OPT_NO_VALUE
+#  define C4C_PARAM_OPT_NO_VALUE NULL
+#endif
 
 /*------------------------------------------------------------------------------
    stack struct definition
@@ -93,7 +109,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRU
  *
  * @param stack  The LIFO stack.
  *
- * @return The element at the top of the stack. C4C_PARAM_NO_VALUE if the stack
+ * @return The element at the top of the stack. C4C_PARAM_OPT_NO_VALUE if the stack
  *         is empty.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack);
@@ -113,9 +129,9 @@ C4C_METHOD_INLINE(C4C_PARAM_PREFIX, size_t, _capacity, void)
  *
  * @return A value that signals that the stack is currently empty.
  */
-C4C_METHOD_INLINE(C4C_PARAM_PREFIX, C4C_PARAM_NO_VALUE_TYPE, _null_val, void)
+C4C_METHOD_INLINE(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _null_val, void)
 {
-	return (C4C_PARAM_NO_VALUE_TYPE)C4C_PARAM_NO_VALUE;
+	return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
 }
 
 /*------------------------------------------------------------------------------
@@ -175,31 +191,24 @@ C4C_METHOD_INLINE(C4C_PARAM_PREFIX, C4C_PARAM_NO_VALUE_TYPE, _null_val, void)
  */
 #undef C4C_PARAM_MAX_SIZE
 
-/**
- * Description:
- * 		The stack invalid type. Used to signal that the stack is empty.
- * 		Recommended void* for pointers. MUST be C4C_PARAM_NO_VALUE's type.
- * 		
- * Expected type:
- * 		<type>
- * 		
- * Examples:
- * 		void*
- * 		int
- */
-#undef C4C_PARAM_NO_VALUE_TYPE
+/*------------------------------------------------------------------------------
+	undef header optional params
+------------------------------------------------------------------------------*/
 
 /**
  * Description:
  * 		The stack invalid type value. Used to signal that the stack is empty.
- * 		Recommended NULL for pointers. MUST be C4C_PARAM_NO_VALUE_TYPE's value.
- * 		
+ * 		Recommended NULL for pointers. MUST be C4C_PARAM_CONTENT_TYPE's value.
+ * 
  * Expected type:
  * 		<value>
+ * 
+ * Default value:
+ *		NULL
  * 		
  * Examples:
  * 		NULL
  * 		INT_MIN
  * 		-1
  */
-#undef C4C_PARAM_NO_VALUE
+#undef C4C_PARAM_OPT_NO_VALUE

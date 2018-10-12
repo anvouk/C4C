@@ -32,16 +32,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\examples\example_stack_literal_c89.c">
-      <Filter>examples</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\examples\example_stack_nullable_c89.c">
-      <Filter>examples</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\examples\example_double_linked_list_c89.c">
       <Filter>examples</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\examples\example_dyn_vector_c89.c">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\examples\example_stack_lifo_c89.c">
       <Filter>examples</Filter>
     </ClCompile>
   </ItemGroup>
@@ -52,23 +49,17 @@
     <None Include="..\..\..\..\include\c4c\linked_list\double_list_impl.inl">
       <Filter>include\linked list</Filter>
     </None>
-    <None Include="..\..\..\..\include\c4c\stack\literal_impl.inl">
-      <Filter>include\stack</Filter>
-    </None>
-    <None Include="..\..\..\..\include\c4c\stack\literal_decl.inl">
-      <Filter>include\stack</Filter>
-    </None>
-    <None Include="..\..\..\..\include\c4c\stack\nullable_impl.inl">
-      <Filter>include\stack</Filter>
-    </None>
-    <None Include="..\..\..\..\include\c4c\stack\nullable_decl.inl">
-      <Filter>include\stack</Filter>
-    </None>
     <None Include="..\..\..\..\include\c4c\vector\dyn_vector_impl.inl">
       <Filter>include\vector</Filter>
     </None>
     <None Include="..\..\..\..\include\c4c\vector\dyn_vector_decl.inl">
       <Filter>include\vector</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\stack\lifo_impl.inl">
+      <Filter>include\stack</Filter>
+    </None>
+    <None Include="..\..\..\..\include\c4c\stack\lifo_decl.inl">
+      <Filter>include\stack</Filter>
     </None>
   </ItemGroup>
 </Project>

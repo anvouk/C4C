@@ -22,10 +22,14 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #include "c4c/config.h"
 #include "c4c/function.h"
 
-#ifdef _C4C_SETTINGS_STRUCT_NO_ALIAS
+#ifdef C4C_FEATURE_STRUCT_NO_ALIAS
 
 #ifndef C4C_STRUCT_DECLARE
 #define C4C_STRUCT_DECLARE(name) struct name
@@ -57,4 +61,4 @@
 	} name;
 #endif
 
-#endif /* _C4C_SETTINGS_NO_STRUCT_ALIAS */ 
+#endif /* C4C_FEATURE_STRUCT_NO_ALIAS */ 

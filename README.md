@@ -1,5 +1,5 @@
 # C4C
-Containers4C or simply C4C is a header only preprocessor-heavy implementation for many common containers available in other programming languages.
+Containers For C or simply C4C is a preprocessor-heavy C implementation of many common containers available in other programming languages like C++.
 <br>
 
 #### This library uses <a href="https://semver.org/">Semantic Versioning 2.0.0</a>

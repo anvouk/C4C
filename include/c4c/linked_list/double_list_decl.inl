@@ -22,6 +22,23 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
+/**
+ * Container:
+ * 		Double linked list.
+ *
+ * Brief description:
+ * 		Heavily inspired by Linux's double linked list.
+ *
+ * Features:
+ * - Sequential access.
+ * - No heap allocations/deallocations.
+ * - No max capacity.
+ */
+
 #include "c4c/config.h"
 #include "c4c/function.h"
 #include "c4c/struct.h"
@@ -29,6 +46,10 @@
 #include "c4c/container_helpers.h"
 
 #include <stddef.h> /* for size_t */
+
+/*------------------------------------------------------------------------------
+	params
+------------------------------------------------------------------------------*/
 
 /*
 Parameters:
@@ -38,26 +59,10 @@ Parameters:
 #define C4C_PARAM_CONTENT 
 */
 
-/**
- * @file
- * 
- * Heavily inspired by Linux's double linked list.
- * 
- * <br><br>
- * 
- * Features:
- * - Sequential access.
- * - No heap allocations/deallocations.
- * - No max capacity.
- */
-
 /*------------------------------------------------------------------------------
    linked list struct definition
 ------------------------------------------------------------------------------*/
 
-/**
- * Double linked list.
- */
 C4C_STRUCT_BEGIN(C4C_PARAM_STRUCT_NAME)
 	C4C_PARAM_CONTENT
 	struct C4C_PARAM_STRUCT_NAME* next;
@@ -191,11 +196,41 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
     undef header params
 ------------------------------------------------------------------------------*/
 
-/* The list struct name (name) (eg. my_int_list, x_list) */
+/**
+ * Description:
+ * 		The container's struct name.
+ * 		
+ * Expected type:
+ * 		<name>
+ * 		
+ * Examples:
+ * 		my_int_list
+ * 		x_list
+ */
 #undef C4C_PARAM_STRUCT_NAME
 
-/* The list functions' prefix (name) (eg. my_list) */
+/**
+ * Description:
+ * 		The container functions' name prefix.
+ * 		
+ * Expected type:
+ * 		<name>
+ * 		
+ * Examples:
+ * 		my_list
+ */
 #undef C4C_PARAM_PREFIX 
 
-/* The list content (type variable_name;) (eg. int a;, char a; long b;, or custom structs */
+/**
+ * Description:
+ * 		The list's stored variable(s).
+ * 		
+ * Expected type:
+ * 		<type> <variable_name>;
+ * 		
+ * Examples:
+ * 		int a;
+ * 		char a; long b;
+ * 		struct* dt; int a; float b;
+ */
 #undef C4C_PARAM_CONTENT

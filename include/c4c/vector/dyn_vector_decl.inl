@@ -22,22 +22,14 @@
  * THE SOFTWARE.
  */
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
-#include "c4c/container_helpers.h"
-
-#include <stddef.h> /* for size_t */
-
 /**
- * @file
+ * Container:
+ * 		Vector.
  *
- * Inspired by C++ std::vector (somewhat similiar interface) this container has
- * been designed as a the de-facto C container (just like std::vector). Less
- * clunky than linked-lists yet just as powerful.
- *
- * <br><br>
+ * Brief description:
+ * 		Inspired by C++ std::vector (somewhat similiar interface) this container
+ * 		has been designed as a the de-facto C container (just like std::vector).
+ * 		Less clunky than linked-lists yet just as powerful.
  *
  * Features:
  * - Random access by index.
@@ -49,13 +41,19 @@
  *   management (as long as you are ok with having some elements shuffled every
  *   time you call such functions)
  * - The same element may not be at the same index forever (see point above).
- *
- * @warning Beware of looping the vector with its size as the upper limit.
- *          Pushing and popping elements during such loops WILL change the
- *          vector's size and consequentially impact the loop behavior. It is
- *          recommended to store the vector's size in a temporary variable and
- *          use this one as the upper loop's limit. See vector example.
  */
+
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
+#include "c4c/config.h"
+#include "c4c/function.h"
+#include "c4c/struct.h"
+
+#include "c4c/container_helpers.h"
+
+#include <stddef.h> /* for size_t */
 
  /*------------------------------------------------------------------------------
 	params
@@ -203,18 +201,65 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_ST
 	undef header params
 ------------------------------------------------------------------------------*/
 
-/* The vector struct name (name) (eg. my_int_vec, x_vector) */
+/**
+ * Description:
+ * 		The container's struct name.
+ * 		
+ * Expected type:
+ * 		<name>
+ * 		
+ * Examples:
+ * 		my_int_vec
+ * 		x_vector
+ */
 #undef C4C_PARAM_STRUCT_NAME
 
-/* The vector functions' prefix (name) (eg. my_vec, t1vec) */
+/**
+ * Description:
+ * 		The container's functions' prefix.
+ * 		
+ * Expected type:
+ * 		<name>
+ * 		
+ * Examples:
+ * 		my_vec
+ * 		t1vec
+ */
 #undef C4C_PARAM_PREFIX
 
-/* The vector element type (type) (eg. int, char, or a custom struct) */
+/**
+ * Description:
+ * 		The vector's stored type.
+ * 		
+ * Expected type:
+ * 		<type>
+ * 		
+ * Examples:
+ * 		int
+ * 		struct abc*
+ */
 #undef C4C_PARAM_CONTENT_TYPE
 
 /*------------------------------------------------------------------------------
 	undef header optional params
 ------------------------------------------------------------------------------*/
 
-/* Overcommit memory during allocations (size_t > 0) (eg. 1, 4, 10) */
+/**
+ * Description:
+ * 		Every time the vector performs an allocation it will allocate C4C_PARAM_OPT_ALLOC_BLOCK 
+ * 		new objects of type C4C_PARAM_CONTENT_TYPE.
+ * 		A higher value might result in fewer allocations in the long run but more 
+ * 		memory consumption.
+ * 		
+ * Expected type:
+ * 		<size_t> (MUST be > 0)
+ * 		
+ * Default value:
+ * 		4
+ * 		
+ * Examples:
+ * 		1
+ * 		4
+ * 		10
+ */
 #undef C4C_PARAM_OPT_ALLOC_BLOCK

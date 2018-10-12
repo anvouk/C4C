@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #include "c4c/config.h"
 #include "c4c/function.h"
 #include "c4c/struct.h"
@@ -30,6 +34,14 @@
 
 #include <stddef.h> /* for NULL */
 #include <string.h> /* for memset() */
+
+/*------------------------------------------------------------------------------
+	params
+------------------------------------------------------------------------------*/
+
+#ifndef C4C_PARAM_OPT_NO_VALUE
+#  define C4C_PARAM_OPT_NO_VALUE NULL
+#endif
 
 /*------------------------------------------------------------------------------
     stack functions implementation
@@ -48,17 +60,17 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRU
 	if (stack->count >= C4C_PARAM_MAX_SIZE)
 		return 0;
 	stack->elements[stack->count] = new_element;
-	stack->count++;
+	++stack->count;
 	return 1;
 }
 
 C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
 {
 	if (stack->count == 0)
-		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_NO_VALUE;
-	stack->count--;
+		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
+	--stack->count;
 	C4C_PARAM_CONTENT_TYPE bottom = stack->elements[stack->count];
-	stack->elements[stack->count] = (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_NO_VALUE;
+	stack->elements[stack->count] = (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
 	return bottom;
 }
 
@@ -70,5 +82,9 @@ C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4
 #undef C4C_PARAM_PREFIX
 #undef C4C_PARAM_CONTENT_TYPE
 #undef C4C_PARAM_MAX_SIZE
-#undef C4C_PARAM_NO_VALUE_TYPE
-#undef C4C_PARAM_NO_VALUE
+
+/*------------------------------------------------------------------------------
+	undef header optional params (see declaration file for docs)
+------------------------------------------------------------------------------*/
+
+#undef C4C_PARAM_OPT_NO_VALUE

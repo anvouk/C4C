@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #include "c4c/config.h"
 #include "c4c/function.h"
 #include "c4c/struct.h"

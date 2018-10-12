@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #include "c4c/config.h"
 #include "c4c/function.h"
 #include "c4c/struct.h"
@@ -34,20 +38,6 @@
 /*------------------------------------------------------------------------------
 	params
 ------------------------------------------------------------------------------*/
-
-/*
-Parameters:
-
-#define C4C_PARAM_STRUCT_NAME 
-#define C4C_PARAM_PREFIX 
-#define C4C_PARAM_CONTENT_TYPE 
-*/
-
-/*
-Optional parameters:
-
-#define C4C_PARAM_OPT_ALLOC_BLOCK 
-*/
 
 #ifndef C4C_PARAM_OPT_ALLOC_BLOCK
 #  define C4C_PARAM_OPT_ALLOC_BLOCK 4
@@ -102,7 +92,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARA
 	size_t i;
 	if (from->size >= to->capacity)
 		C4C_METHOD_CALL(C4C_PARAM_PREFIX, _resize, to, from->size);
-	for (i = 0; i < from->size; i++) {
+	for (i = 0; i < from->size; ++i) {
 		to->data[i] = from->data[i];
 	}
 	to->size = from->size;
@@ -115,7 +105,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM
 		if (!c4c_succeeded(C4C_METHOD_CALL(C4C_PARAM_PREFIX, _resize, vec, vec->capacity + C4C_PARAM_OPT_ALLOC_BLOCK)))
 			return 0;
 	vec->data[vec->size] = element;
-	vec->size++;
+	++vec->size;
 	return 1;
 }
 
@@ -130,7 +120,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_S
 	 * the new element in the right spot. */
 	vec->data[vec->size] = vec->data[index];
 	vec->data[index] = element;
-	vec->size++;
+	++vec->size;
 	return 1;
 }
 
@@ -138,7 +128,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_back, C4C_STRUCT_DECLARE(C4C_PARAM_
 {
 	if (vec->size == 0)
 		return 2;
-	vec->size--;
+	--vec->size;
 	return 1;
 }
 
@@ -148,26 +138,20 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_ST
 		return 0;
 	/* Replace the element to 'remove' with the last one, then decrement size. */
 	vec->data[index] = vec->data[vec->size - 1];
-	vec->size--;
+	--vec->size;
 	return 1;
 }
 
 /*------------------------------------------------------------------------------
-	undef header params
+	undef header params (see declaration file for docs)
 ------------------------------------------------------------------------------*/
 
-/* The vector struct name (name) (eg. my_int_vec, x_vector) */
 #undef C4C_PARAM_STRUCT_NAME
-
-/* The vector functions' prefix (name) (eg. my_vec, t1vec) */
 #undef C4C_PARAM_PREFIX
-
-/* The vector element type (type) (eg. int, char, or a custom struct) */
 #undef C4C_PARAM_CONTENT_TYPE
 
 /*------------------------------------------------------------------------------
-	undef header optional params
+	undef header optional params (see declaration file for docs)
 ------------------------------------------------------------------------------*/
 
-/* Overcommit memory during allocations (size_t > 0) (eg. 1, 4, 10) */
 #undef C4C_PARAM_OPT_ALLOC_BLOCK

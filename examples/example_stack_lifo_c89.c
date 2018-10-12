@@ -22,21 +22,25 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
-/* 1.1 FAC: Define custom implementations for some c4c macros. */
+/* 1.1 Optional: Define custom implementations of c4c macros. */
 /*
 #define C4C_FUNCTION(rettype, name, ...) \
 	rettype __stdcall name(__VA_ARGS__)
 */
 
-/* 1.2 FAC: Enable/Disable/Change certain features by defining c4c settings macros. */
-/* Define this to disable typedeffing structs. */
+/* 1.2 Optional: Enable/Disable/Change certain features by defining C4C_FEATURE macros. */
+/* Define this to disable struct typedeffing. */
 /*
-#define _C4C_SETTINGS_STRUCT_NO_ALIAS
+#define C4C_FEATURE_STRUCT_NO_ALIAS
 */
 
 /* 2. Declare the container interface in a .h file. */
@@ -44,21 +48,19 @@
 #define C4C_PARAM_PREFIX my_stack
 #define C4C_PARAM_CONTENT_TYPE int
 #define C4C_PARAM_MAX_SIZE 64
-#define C4C_PARAM_NO_VALUE_TYPE int
-#define C4C_PARAM_NO_VALUE -1
-#include "c4c/stack/literal_decl.inl"
+#define C4C_PARAM_OPT_NO_VALUE -1
+#include "c4c/stack/lifo_decl.inl"
 
-/* 3. Declare the container implementation in a .c file or in wherever you
- *    want it to be. Make sure the macro params for the implementation have the
+/* 3. Declare the container implementation in a .c file or wherever you
+ *    want it to be in. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
 #define C4C_PARAM_STRUCT_NAME MY_STACK
 #define C4C_PARAM_PREFIX my_stack
 #define C4C_PARAM_CONTENT_TYPE int
 #define C4C_PARAM_MAX_SIZE 64
-#define C4C_PARAM_NO_VALUE_TYPE int
-#define C4C_PARAM_NO_VALUE -1
-#include "c4c/stack/literal_impl.inl"
+#define C4C_PARAM_OPT_NO_VALUE -1
+#include "c4c/stack/lifo_impl.inl"
 
 /* 4. Magic happens. You can now use the container for your type :) */
 int main(int argc, char* argv[])

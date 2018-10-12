@@ -22,13 +22,17 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #ifndef __C4C_CONFIG_H__
 #define __C4C_CONFIG_H__
 
 /**
- * @file
- *
- * Common file patterns:
+ * === C4C Introduction ===
+ * 
+ * Containers structure:
  * - Containers are divided in folders.
  * - For a container type there might exist more than one implementation. In
  *   such cases consult the xxx_decl.inl file's documentation to see in what it
@@ -42,10 +46,6 @@
  *   in different files as long as the C4C_PARAM_...s have the SAME values.
  *   Ideally you want to #include the _decl.inl file in a header file and the
  *   _impl.inl in the respective source file.
- * - Files with the literal_ prefix are to be used with non-nullable values (NO
- *   pointers).
- * - Files with the nullable_ prefix are to be used with pointers values
- *   (nullables).
  * - dyn_ prefixes indicates that the container WILL use malloc/free to
  *   allocate/deallocate memory at runtime. Otherwise you'll have a
  *   C4C_PARAM_MAX_SIZE or similiar to #define in order to specify the memory
@@ -65,20 +65,21 @@
  *   customizable structure making it easy for the programmer to access them
  *   whenever he wants to.
  *
- * <br><br><br>
- *
- * Common macro patterns:
- * - Macros prefixed with an underscore are not to be modified.
- * - Macros postfixed with an underscore are for internal usage.
+ * Common macro structure:
+ * - Macros prefixed with _C4C are not to be modified.
+ * - Macros prefixed with a double underscore are for internal usage.
  * - Macros prefixed and postfixed with a double underscore are header guards.
- * - Macros prefixed with '_C4C_SETTINGS_' can be defined before including the
- *   header to enable some frequently used pattern.
+ * - Macros prefixed with 'C4C_FEATURE_' can be defined before including the
+ *   header to enable/disable some frequently used pattern.
  * - Files with the .inl extension are 'template' headers. Include them in the
  *   project, look at the end of those files and you'll see macros like '#undef
  *   C4C_PARAM_xxx' each with its own comment specifying what it does and what
  *   values you can put in (with some examples too). These macros must be
  *   correctly #defined before including the .inl file. Note that these macros
  *   will automatically get #undefined after each include of the .inl file.
+ *   C4C_PARAM_OPT_xxx like macros can be optionally defined to customize some 
+ *   other aspect of the container. If left undefined they will be automatically 
+ *   #defined and #undefined inside the .inl files with a default value.
  * - Macros starting with 'C4C_' can be custom defined before including the .h
  *   file to customize their behavior. Remember to manually #undefine them when
  *   no longer needed.
@@ -86,8 +87,6 @@
  *   other file can be included more than once (so you can customize macros) so
  *   the preprocessor might slow down a bit if they are excessively included
  *   everywhere (though not that much since they are all very small files).
- *
- * <br><br><br>
  *
  * C4C errors API:
  * - Functions with the return value of type c4c_res_t can have multiple
@@ -102,8 +101,6 @@
  *   certain (documented) particular behaviors may manifest themselves.
  * - Use the macro c4c_succeeded to get a boolean value when corner cases are
  *   negligible.
- *
- * <br><br><br>
  *
  * TODOs, FAQs, and stuff:
  * - I will add more and more containers as I need them. If you have created
@@ -138,18 +135,18 @@
 #define _C4C_CONCAT _C4C_CONCAT_
 
 #define _C4C_VERSION_MAJOR 0
-#define _C4C_VERSION_MINOR 3
-#define _C4C_VERSION_PATCH 2
+#define _C4C_VERSION_MINOR 4
+#define _C4C_VERSION_PATCH 0
 #define _C4C_VERSION_STATE "beta"
 
-#define _C4C_VERSION_STR_(major, minor, patch) \
+#define __C4C_VERSION_STR(major, minor, patch) \
 	_C4C_STR(major) "." \
 	_C4C_STR(minor) "." \
 	_C4C_STR(patch) "-" \
 	_C4C_VERSION_STATE
 
 #define _C4C_VERSION_STR \
-	_C4C_VERSION_STR_(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
+	__C4C_VERSION_STR(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
 
 #define _C4C_VERSION_MAKE(major, minor, patch) \
 	((major) << 16) | ((minor) << 8) | (patch))
