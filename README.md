@@ -11,4 +11,4 @@ See the introduction in the <a href="https://github.com/QwertyQaz414/C4C/blob/ma
 In this release the following containers are supported:
 - stack (LIFO)
 - double linked list (Linux inspired)
-- dynamic vector (C++ std::vector inspired)
+- static/dynamic vector (C++ std::vector inspired)

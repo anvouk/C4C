@@ -26,55 +26,78 @@
  * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
  */
 
-#include "c4c/internal/common_headers.h"
-
-#include <string.h> /* for memset() */
-
 /*------------------------------------------------------------------------------
-	params
+	parameters
 ------------------------------------------------------------------------------*/
 
-#include "c4c/internal/params/default.h"
-#include "c4c/internal/params/contenttype.h"
-#include "c4c/internal/params/capacity.h"
-#include "c4c/internal/params/optnovalue.h"
+/**
+ * Description:
+ *		The container will NOT perform any memory allocations/deallocations and 
+ *		cannot be resized.
+ *		The container's capacity must be specified in this macro. It won't change 
+ *		at runtime.
+ *		
+ * Expected type:
+ * 		<size_t> (MUST be > 0)
+ *
+ * Examples:
+ * 		20
+ * 		32
+ * 		1600
+ */
+/*
+#define C4C_ALLOC_STATIC  <capacity > 0>
+*/
+
+/**
+ * Description:
+ *		The container will perform memory allocations/deallocations and may be 
+ *		resized.
+ * 		Every time the container performs an allocation it will allocate C4C_ALLOC_DYNAMIC
+ * 		new objects of the specified type.
+ * 		A higher value might result in fewer allocations in the long run but more
+ * 		memory consumption.
+ *
+ * Expected type:
+ * 		<size_t> (MUST be > 0)
+ *
+ * Default value:
+ * 		1
+ *
+ * Examples:
+ * 		1
+ * 		4
+ * 		10
+ */
+/*
+#define C4C_ALLOC_DYNAMIC <alloc_blocks > 0>
+*/
 
 /*------------------------------------------------------------------------------
-    stack functions implementation
+	parameters checks
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
-{
-	if (stack->count != 0) {
-		stack->count = 0;
-		memset(stack->elements, 0, sizeof(C4C_PARAM_CONTENT_TYPE) * C4C_PARAM_CAPACITY);
-	}
-}
-
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element)
-{
-	if (stack->count >= C4C_PARAM_CAPACITY)
-		return C4CE_FULL;
-	stack->elements[stack->count] = new_element;
-	++stack->count;
-	return C4CE_SUCCESS;
-}
-
-C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
-{
-	if (stack->count == 0)
-		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
-	--stack->count;
-	C4C_PARAM_CONTENT_TYPE bottom = stack->elements[stack->count];
-	stack->elements[stack->count] = (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
-	return bottom;
-}
+#if !defined(C4C_ALLOC_STATIC) && !defined(C4C_ALLOC_DYNAMIC)
+#  define C4C_ALLOC_DYNAMIC 1
+#else
+#  if defined(C4C_ALLOC_STATIC) && (C4C_ALLOC_STATIC <= 0)
+#    error C4C_ALLOC_STATIC must be greater than zero.
+#  endif
+#  if defined(C4C_ALLOC_DYNAMIC) && (C4C_ALLOC_DYNAMIC <= 0)
+#    error C4C_ALLOC_DYNAMIC must be greater than zero.
+#  endif
+#endif
 
 /*------------------------------------------------------------------------------
-	undef header params
+	macros
 ------------------------------------------------------------------------------*/
 
-#include "c4c/internal/params/default_undef.h"
-#include "c4c/internal/params/contenttype_undef.h"
-#include "c4c/internal/params/capacity_undef.h"
-#include "c4c/internal/params/optnovalue_undef.h"
+#ifdef C4C_ALLOC_DYNAMIC
+#  ifndef C4C_RAW_ARRAY
+#    define C4C_RAW_ARRAY(type_, name_) type_* name_
+#  endif
+#else /* C4C_ALLOC_STATIC */
+#  ifndef C4C_RAW_ARRAY
+#    define C4C_RAW_ARRAY(type_, name_) type_ name_[C4C_ALLOC_STATIC]
+#  endif
+#endif

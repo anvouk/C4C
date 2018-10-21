@@ -22,53 +22,52 @@
  * THE SOFTWARE.
  */
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
-#include "c4c/container_helpers.h"
-
-#include <stddef.h> /* for NULL */
-#include <string.h> /* for memset() */
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
 
 /*------------------------------------------------------------------------------
-    stack functions implementation
+	parameters
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
-{
-	if (stack->count != 0) {
-		stack->count = 0;
-		memset(stack->elements, 0, sizeof(C4C_PARAM_CONTENT_TYPE) * C4C_PARAM_MAX_SIZE);
-	}
-}
+/**
+ * Description:
+ * 		The container's struct name.
+ *
+ * Expected type:
+ * 		<name>
+ *
+ * Examples:
+ * 		my_int_vec
+ * 		x_list
+ */
+/*
+#define C4C_PARAM_STRUCT_NAME
+*/
 
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element)
-{
-	if (stack->count >= C4C_PARAM_MAX_SIZE)
-		return 0;
-	stack->elements[stack->count] = new_element;
-	stack->count++;
-	return 1;
-}
-
-C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
-{
-	if (stack->count == 0)
-		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_NO_VALUE;
-	stack->count--;
-	C4C_PARAM_CONTENT_TYPE bottom = stack->elements[stack->count];
-	stack->elements[stack->count] = (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_NO_VALUE;
-	return bottom;
-}
+/**
+ * Description:
+ * 		The container's functions' prefix.
+ *
+ * Expected type:
+ * 		<name>
+ *
+ * Examples:
+ * 		my_vec
+ * 		t1lst
+ */
+/*
+#define C4C_PARAM_PRFIX
+*/
 
 /*------------------------------------------------------------------------------
-    undef header params (see declaration file for docs)
+	parameters checks
 ------------------------------------------------------------------------------*/
 
-#undef C4C_PARAM_STRUCT_NAME
-#undef C4C_PARAM_PREFIX
-#undef C4C_PARAM_CONTENT_TYPE
-#undef C4C_PARAM_MAX_SIZE
-#undef C4C_PARAM_NO_VALUE_TYPE
-#undef C4C_PARAM_NO_VALUE
+#ifndef C4C_PARAM_STRUCT_NAME
+#  error C4C_PARAM_STRUCT_NAME must be defined for the current container.
+#endif
+
+#ifndef C4C_PARAM_PREFIX
+#  error C4C_PARAM_PREFIX must be defined for the current container.
+#endif

@@ -26,28 +26,5 @@
  * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
  */
 
-#include "c4c/config.h"
-
-#ifndef C4C_CALL_CONVENTION
-#define C4C_CALL_CONVENTION
-#endif
-
-#ifndef C4C_FUNCTION
-#define C4C_FUNCTION(rettype, name, ...) \
-	rettype C4C_CALL_CONVENTION name(__VA_ARGS__)
-#endif
-
-#ifndef C4C_FUNCTION_CALL
-#define C4C_FUNCTION_CALL(name, ...) \
-	name(__VA_ARGS__)
-#endif
-
-#ifndef C4C_FUNCTION_INLINE
-#define C4C_FUNCTION_INLINE(rettype, name, ...) \
-	static rettype name(__VA_ARGS__)
-#endif
-
-#ifndef C4C_FUNCTION_INLINE_CALL
-#define C4C_FUNCTION_INLINE_CALL(name, ...) \
-	name(__VA_ARGS__)
-#endif
+#undef C4C_ALLOC_DYNAMIC
+#undef C4C_ALLOC_STATIC

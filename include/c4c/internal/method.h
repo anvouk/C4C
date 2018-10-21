@@ -26,10 +26,6 @@
  * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
  */
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
 #ifndef C4C_METHOD
 #define C4C_METHOD(prefix, rettype, suffix, ...) \
 	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)

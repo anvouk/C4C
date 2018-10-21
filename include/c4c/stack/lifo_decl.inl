@@ -32,21 +32,17 @@
  *
  * Brief description:
  * 		A standard and minimal LIFO stack implementation.
+ * 		
+ * Supports allocators: NO
+ * Container type:      STATIC
  *
  * Features:
  * - Very lightweight and fast with a minimal yet expandable interface.
  * - Fixed push/pop.
  * - LIFO stack.
- * - Memory pool.
  */
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
-#include "c4c/container_helpers.h"
-
-#include <stddef.h> /* for size_t */
+#include "c4c/internal/common_headers.h"
 
 /*------------------------------------------------------------------------------
 	params
@@ -58,18 +54,14 @@ Parameters:
 #define C4C_PARAM_STRUCT_NAME 
 #define C4C_PARAM_PREFIX 
 #define C4C_PARAM_CONTENT_TYPE 
-#define C4C_PARAM_MAX_SIZE 
+#define C4C_PARAM_CAPACITY 
+#define C4C_PARAM_OPT_NO_VALUE
 */
 
-/*
-Optional parameters:
-
-#define C4C_PARAM_OPT_NO_VALUE 
-*/
-
-#ifndef C4C_PARAM_OPT_NO_VALUE
-#  define C4C_PARAM_OPT_NO_VALUE NULL
-#endif
+#include "c4c/internal/params/default.h"
+#include "c4c/internal/params/contenttype.h"
+#include "c4c/internal/params/capacity.h"
+#include "c4c/internal/params/optnovalue.h"
 
 /*------------------------------------------------------------------------------
    stack struct definition
@@ -77,7 +69,7 @@ Optional parameters:
 
 C4C_STRUCT_BEGIN(C4C_PARAM_STRUCT_NAME)
 	size_t count;
-	C4C_PARAM_CONTENT_TYPE elements[C4C_PARAM_MAX_SIZE];
+	C4C_PARAM_CONTENT_TYPE elements[C4C_PARAM_CAPACITY];
 C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 
 /*------------------------------------------------------------------------------
@@ -99,8 +91,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_N
  * @param new_element  The element to add.
  * @param stack  The LIFO stack.
  *
- * @retval 0  The stack is already full.
- * @retval 1  Success.
+ * @retval C4CE_FULL     The stack is already full.
+ * @retval C4CE_SUCCESS  Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element);
 
@@ -121,7 +113,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4
  */
 C4C_METHOD_INLINE(C4C_PARAM_PREFIX, size_t, _capacity, void)
 {
-	return (size_t)C4C_PARAM_MAX_SIZE;
+	return (size_t)C4C_PARAM_CAPACITY;
 }
 
 /**
@@ -138,77 +130,7 @@ C4C_METHOD_INLINE(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _null_val, void)
     undef header params
 ------------------------------------------------------------------------------*/
 
-/**
- * Description:
- * 		The container's struct name.
- * 		
- * Expected type:
- * 		<name>
- * 		
- * Examples:
- * 		my_int_stack
- * 		x_stack
- */
-#undef C4C_PARAM_STRUCT_NAME
-
-/**
- * Description:
- * 		The container's functions' prefix.
- * 		
- * Expected type:
- * 		<name>
- * 		
- * Examples:
- * 		my_int_stack
- * 		x_stack
- */
-#undef C4C_PARAM_PREFIX
-
-/**
- * Description:
- * 		The stack's stored type.
- * 		
- * Expected type:
- * 		<type>
- * 		
- * Examples:
- * 		int
- * 		struct abc*
- */
-#undef C4C_PARAM_CONTENT_TYPE
-
-/**
- * Description:
- * 		The stack max size.
- * 		
- * Expected type:
- * 		<size_t>
- * 		
- * Examples:
- * 		256
- * 		400
- * 		10
- */
-#undef C4C_PARAM_MAX_SIZE
-
-/*------------------------------------------------------------------------------
-	undef header optional params
-------------------------------------------------------------------------------*/
-
-/**
- * Description:
- * 		The stack invalid type value. Used to signal that the stack is empty.
- * 		Recommended NULL for pointers. MUST be C4C_PARAM_CONTENT_TYPE's value.
- * 
- * Expected type:
- * 		<value>
- * 
- * Default value:
- *		NULL
- * 		
- * Examples:
- * 		NULL
- * 		INT_MIN
- * 		-1
- */
-#undef C4C_PARAM_OPT_NO_VALUE
+#include "c4c/internal/params/default_undef.h"
+#include "c4c/internal/params/contenttype_undef.h"
+#include "c4c/internal/params/capacity_undef.h"
+#include "c4c/internal/params/optnovalue_undef.h"

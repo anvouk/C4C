@@ -30,13 +30,16 @@
  * This header has been heavily inspired by linux's linked list
  */
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
-#include "c4c/container_helpers.h"
+#include "c4c/internal/common_headers.h"
 
 #include <stddef.h> /* for NULL */
+
+/*------------------------------------------------------------------------------
+	params
+------------------------------------------------------------------------------*/
+
+#include "c4c/internal/params/default.h"
+#include "c4c/internal/params/content.h"
 
 /*------------------------------------------------------------------------------
     linked list static functions
@@ -131,9 +134,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 #undef _list_splice_
 
 /*------------------------------------------------------------------------------
-    undef header params (see declaration file for docs)
+	undef header params
 ------------------------------------------------------------------------------*/
 
-#undef C4C_PARAM_STRUCT_NAME
-#undef C4C_PARAM_PREFIX 
-#undef C4C_PARAM_CONTENT
+#include "c4c/internal/params/default_undef.h"
+#include "c4c/internal/params/content_undef.h"

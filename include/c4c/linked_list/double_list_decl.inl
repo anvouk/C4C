@@ -33,17 +33,17 @@
  * Brief description:
  * 		Heavily inspired by Linux's double linked list.
  *
+ * Supports allocators: NO
+ * Container type:      DOUBLE LINKED LIST
+ * 
  * Features:
  * - Sequential access.
  * - No heap allocations/deallocations.
  * - No max capacity.
+ * - Fast insertion and deletion.
  */
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
-#include "c4c/container_helpers.h"
+#include "c4c/internal/common_headers.h"
 
 #include <stddef.h> /* for size_t */
 
@@ -58,6 +58,9 @@ Parameters:
 #define C4C_PARAM_PREFIX 
 #define C4C_PARAM_CONTENT 
 */
+
+#include "c4c/internal/params/default.h"
+#include "c4c/internal/params/content.h"
 
 /*------------------------------------------------------------------------------
    linked list struct definition
@@ -196,41 +199,5 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
     undef header params
 ------------------------------------------------------------------------------*/
 
-/**
- * Description:
- * 		The container's struct name.
- * 		
- * Expected type:
- * 		<name>
- * 		
- * Examples:
- * 		my_int_list
- * 		x_list
- */
-#undef C4C_PARAM_STRUCT_NAME
-
-/**
- * Description:
- * 		The container functions' name prefix.
- * 		
- * Expected type:
- * 		<name>
- * 		
- * Examples:
- * 		my_list
- */
-#undef C4C_PARAM_PREFIX 
-
-/**
- * Description:
- * 		The list's stored variable(s).
- * 		
- * Expected type:
- * 		<type> <variable_name>;
- * 		
- * Examples:
- * 		int a;
- * 		char a; long b;
- * 		struct* dt; int a; float b;
- */
-#undef C4C_PARAM_CONTENT
+#include "c4c/internal/params/default_undef.h"
+#include "c4c/internal/params/content_undef.h"

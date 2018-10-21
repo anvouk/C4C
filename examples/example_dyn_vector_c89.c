@@ -37,26 +37,29 @@
 rettype __stdcall name(__VA_ARGS__)
 */
 
-/* 1.2 FAC: Enable/Disable/Change certain features by defining C4C_FEATURE macros. */
+/* 1.2 Optional: Enable/Disable/Change certain features by defining C4C_FEATURE macros. */
 /* Define this to disable typedeffing structs. */
 /*
 #define _C4C_SETTINGS_STRUCT_NO_ALIAS
 */
 
+/* 1.3 Optional: Make the container static by defining C4C_ALLOC_STATIC
+ */
+
 /* 2. Declare the container interface in a .h file. */
-#define C4C_PARAM_STRUCT_NAME TestVector
-#define C4C_PARAM_PREFIX tvec
-#define C4C_PARAM_CONTENT_TYPE int
-#include "c4c/vector/dyn_vector_decl.inl"
+#define C4C_PARAM_STRUCT_NAME	TestVector
+#define C4C_PARAM_PREFIX		tvec
+#define C4C_PARAM_CONTENT_TYPE	int
+#include "c4c/vector/vector_decl.inl"
 
 /* 3. Declare the container implementation in a .c file or wherever you
  *    want it to be in. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
-#define C4C_PARAM_STRUCT_NAME TestVector
-#define C4C_PARAM_PREFIX tvec
-#define C4C_PARAM_CONTENT_TYPE int
-#include "c4c/vector/dyn_vector_impl.inl"
+#define C4C_PARAM_STRUCT_NAME	TestVector
+#define C4C_PARAM_PREFIX		tvec
+#define C4C_PARAM_CONTENT_TYPE	int
+#include "c4c/vector/vector_impl.inl"
 
 void dump_vec(const TestVector* vec);
 
@@ -117,8 +120,8 @@ int main(int argc, char* argv[])
 void dump_vec(const TestVector* vec)
 {
 	size_t i;
-	printf("\nvec: %d/%d\n", vec->size, vec->capacity);
+	printf("\nvec: %d/%d\n", (int)vec->size, (int)vec->capacity);
 	for (i = 0; i < vec->size; i++) {
-		printf("[%.2d] %d\n", i, vec->data[i]);
+		printf("[%.2d] %d\n", (int)i, vec->data[i]);
 	}
 }

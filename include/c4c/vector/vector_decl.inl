@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 /**
  * Container:
  * 		Vector.
@@ -30,12 +34,16 @@
  * 		Inspired by C++ std::vector (somewhat similiar interface) this container
  * 		has been designed as a the de-facto C container (just like std::vector).
  * 		Less clunky than linked-lists yet just as powerful.
+ * 		By defining C4C_ALLOC_STATIC this container won't perform ANY allocation.
  *
+ * Supports allocators: YES
+ * Container type:      STATIC/DYNAMIC
+ * 
  * Features:
  * - Random access by index.
  * - push/pop elements wherever you want to.
- * - Heap allocation/deallocation ONLY upon initialization and freeing.
- * - Resizable.
+ * - Heap allocation/deallocation ONLY upon initialization and freeing (if dynamic).
+ * - Resizable (if dynamic).
  * - Copyable (to another vector).
  * - Extremely fast elements insertion and deletion without any sort of memory
  *   management (as long as you are ok with having some elements shuffled every
@@ -43,39 +51,23 @@
  * - The same element may not be at the same index forever (see point above).
  */
 
-/*
- * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
- */
+#include "c4c/internal/allocators_decl.h"
+#include "c4c/internal/common_headers.h"
 
-#include "c4c/config.h"
-#include "c4c/function.h"
-#include "c4c/struct.h"
-
-#include "c4c/container_helpers.h"
-
-#include <stddef.h> /* for size_t */
-
- /*------------------------------------------------------------------------------
+/*------------------------------------------------------------------------------
 	params
- ------------------------------------------------------------------------------*/
+------------------------------------------------------------------------------*/
 
- /*
- Parameters:
+/*
+Parameters:
 
- #define C4C_PARAM_STRUCT_NAME 
- #define C4C_PARAM_PREFIX 
- #define C4C_PARAM_CONTENT_TYPE 
- */
+#define C4C_PARAM_STRUCT_NAME 
+#define C4C_PARAM_PREFIX 
+#define C4C_PARAM_CONTENT_TYPE 
+*/
 
- /*
- Optional parameters:
-
- #define C4C_PARAM_OPT_ALLOC_BLOCK 
- */
-
-#ifndef C4C_PARAM_OPT_ALLOC_BLOCK
-#  define C4C_PARAM_OPT_ALLOC_BLOCK 4
-#endif
+#include "c4c/internal/params/default.h"
+#include "c4c/internal/params/contenttype.h"
 
 /*------------------------------------------------------------------------------
 	vector struct definition
@@ -84,7 +76,7 @@
 C4C_STRUCT_BEGIN(C4C_PARAM_STRUCT_NAME)
 	size_t size;
 	size_t capacity;
-	C4C_PARAM_CONTENT_TYPE* data;
+	C4C_RAW_ARRAY(C4C_PARAM_CONTENT_TYPE, data);
 C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 
 /*------------------------------------------------------------------------------
@@ -94,14 +86,14 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 /**
  * Initialize a new dynamic vector.
  *
- * @param vec       The vector.
- * @param capacity  The vector's maximum size. If 0 malloc won't get called and
- *                  the function's return value will be 2.
- *
- * @retval 0  malloc failed.
- * @retval 1  Success.
- * @retval 2  Success but no allocation has been performed (capacity is set to
- *            0).
+ * @param vec  	     The vector.
+ * @param capacity   The vector's maximum size. Ignored if C4C_ALLOC_STATIC has 
+ *                   been defined.
+ * 
+ * @retval C4CE_INVALID_ARG  Capacity is an invalid number (zero?). No allocation
+ *                           has been performed.
+ * @retval C4CE_MALLOC_FAIL  C4C_ALLOC() failed.
+ * @retval C4CE_SUCCESS      Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t capacity);
 
@@ -115,16 +107,16 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _free, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NA
 /**
  * Resize the vector. Either shrink it or grow it (return value may change).
  *
- * @param vec       The vector.
- * @param capacity  The new capacity.
- * 
- * @note Ignores C4C_PARAM_OPT_ALLOC_BLOCK.
+ * @param vec        The vector.
+ * @param capacity   The new capacity.
  *
- * @retval 0  realloc failed.
- * @retval 1  Success.
- * @retval 2  Success but, due to the shrinking of the vector, some elements
- *            were discarded.
- * @retval 3  Success but nothing happened (new capacity == old capacity).
+ * @retval C4CE_REALLOC_FAIL      realloc failed.
+ * @retval C4CE_CANT_DO           C4C_ALLOC_STATIC is defined. Cannot resize a
+ *                                static array.
+ * @retval C4CE_SUCCESS           Success.
+ * @retval C4CEW_ELEMS_DISCARDED  Success but, due to the shrinking of the
+ *                                vector, some elements were discarded.
+ * @retval C4CEW_NOTHING          The new capacity is the same as the current one.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t capacity);
 
@@ -137,18 +129,21 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_ST
  * @param from  The source vector.
  * @param to    The destination vector.
  *
- * @retval 1  Success.
+ * @retval C4CE_SUCCESS  Success.
+ * @retval resize()'s    error codes.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* from, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* to);
 
 /**
  * Add a new element to the vector's tail (if not already full).
  *
- * @param vec      The vector.
- * @param element  The element to add.
+ * @param vec        The vector.
+ * @param element    The element to add.
  *
- * @retval 0  Memory allocation/reallocation failed.
- * @retval 1  Success.
+ * @retval C4CE_FULL     The vector is full and can't be expanded
+ *                       (C4C_ALLOC_STATIC has been defined).
+ * @retval resize()'s    error codes.
+ * @retval C4CE_SUCCESS  Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element);
 
@@ -160,13 +155,15 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM
  *       used with the only drawback that the old element at the index position
  *       will end up at the end of the vector.
  *
- * @param vec      The vector.
- * @param element  The element to add.
- * @param index    Where to add the new element.
+ * @param vec        The vector.
+ * @param element    The element to add.
+ * @param index      Where to add the new element.
  *
- * @retval -1  Index out of bounds.
- * @retval 0   Memory allocation/reallocation failed.
- * @retval 1   Success.
+ * @retval C4CE_FULL                 The vector is full and can't be expanded
+ *                                   (C4C_ALLOC_STATIC has been defined).
+ * @retval C4CE_INDEX_OUT_OF_BOUNDS  Index is out of bounds.
+ * @retval resize()'s                error codes.
+ * @retval C4CE_SUCCESS              Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element, size_t index);
 
@@ -179,8 +176,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_S
  *
  * @param vec  The vector.
  *
- * @retval 1  Success.
- * @retval 2  Success but the vector was already empty.
+ * @retval C4CE_EMPTY    The vector is already empty.
+ * @retval C4CE_SUCCESS  Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_back, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec);
 
@@ -191,9 +188,10 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_back, C4C_STRUCT_DECLARE(C4C_PARAM_
  *
  * @param vec    The vector.
  * @param index  The element's to remove index.
- *
- * @retval 0  Index out of bounds.
- * @retval 1  Success.
+ * 
+ * @retval C4CE_EMPTY                The vector is already empty.
+ * @retval C4CE_INDEX_OUT_OF_BOUNDS  Index is out of bounds (index >= size).
+ * @retval C4CE_SUCCESS              Success.
  */
 C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t index);
 
@@ -201,65 +199,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_ST
 	undef header params
 ------------------------------------------------------------------------------*/
 
-/**
- * Description:
- * 		The container's struct name.
- * 		
- * Expected type:
- * 		<name>
- * 		
- * Examples:
- * 		my_int_vec
- * 		x_vector
- */
-#undef C4C_PARAM_STRUCT_NAME
+#include "c4c/internal/params/default_undef.h"
+#include "c4c/internal/params/contenttype_undef.h"
 
-/**
- * Description:
- * 		The container's functions' prefix.
- * 		
- * Expected type:
- * 		<name>
- * 		
- * Examples:
- * 		my_vec
- * 		t1vec
- */
-#undef C4C_PARAM_PREFIX
-
-/**
- * Description:
- * 		The vector's stored type.
- * 		
- * Expected type:
- * 		<type>
- * 		
- * Examples:
- * 		int
- * 		struct abc*
- */
-#undef C4C_PARAM_CONTENT_TYPE
-
-/*------------------------------------------------------------------------------
-	undef header optional params
-------------------------------------------------------------------------------*/
-
-/**
- * Description:
- * 		Every time the vector performs an allocation it will allocate C4C_PARAM_OPT_ALLOC_BLOCK 
- * 		new objects of type C4C_PARAM_CONTENT_TYPE.
- * 		A higher value might result in fewer allocations in the long run but more 
- * 		memory consumption.
- * 		
- * Expected type:
- * 		<size_t> (MUST be > 0)
- * 		
- * Default value:
- * 		4
- * 		
- * Examples:
- * 		1
- * 		4
- * 		10
- */
-#undef C4C_PARAM_OPT_ALLOC_BLOCK
+#include "c4c/internal/allocators_undef.h"

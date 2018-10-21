@@ -120,9 +120,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\c4c\config.h" />
-    <ClInclude Include="..\..\..\..\include\c4c\container_helpers.h" />
-    <ClInclude Include="..\..\..\..\include\c4c\function.h" />
-    <ClInclude Include="..\..\..\..\include\c4c\struct.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\allocators_decl.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\allocators_impl.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\allocators_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\common_headers.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\function.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\method.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\capacity.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\capacity_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\content.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\content_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\optnovalue.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\optnovalue_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\contenttype.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\contenttype_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\default.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\params\default_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\struct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\examples\example_double_linked_list_c89.c">
@@ -138,8 +152,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <None Include="..\..\..\..\include\c4c\vector\dyn_vector_decl.inl" />
-    <None Include="..\..\..\..\include\c4c\vector\dyn_vector_impl.inl" />
+    <None Include="..\..\..\..\include\c4c\vector\vector_decl.inl" />
+    <None Include="..\..\..\..\include\c4c\vector\vector_impl.inl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\include\c4c\linked_list\double_list_decl.inl" />

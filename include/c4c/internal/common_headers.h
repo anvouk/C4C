@@ -27,38 +27,7 @@
  */
 
 #include "c4c/config.h"
-#include "c4c/function.h"
 
-#ifdef C4C_FEATURE_STRUCT_NO_ALIAS
-
-#ifndef C4C_STRUCT_DECLARE
-#define C4C_STRUCT_DECLARE(name) struct name
-#endif
-
-#ifndef C4C_STRUCT_BEGIN
-#define C4C_STRUCT_BEGIN(name) \
-	struct name {
-#endif
-
-#ifndef C4C_STRUCT_END
-#define C4C_STRUCT_END(name) \
-	};
-#endif
-
-#else
-
-#ifndef C4C_STRUCT_DECLARE
-#define C4C_STRUCT_DECLARE(name) name
-#endif
-
-#ifndef C4C_STRUCT_BEGIN
-#define C4C_STRUCT_BEGIN(name) \
-	typedef struct name {
-#endif
-
-#ifndef C4C_STRUCT_END
-#define C4C_STRUCT_END(name) \
-	} name;
-#endif
-
-#endif /* C4C_FEATURE_STRUCT_NO_ALIAS */ 
+#include "c4c/internal/function.h"
+#include "c4c/internal/struct.h"
+#include "c4c/internal/method.h"

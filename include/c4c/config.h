@@ -31,7 +31,7 @@
 
 /**
  * === C4C Introduction ===
- * 
+ *
  * Containers structure:
  * - Containers are divided in folders.
  * - For a container type there might exist more than one implementation. In
@@ -46,10 +46,6 @@
  *   in different files as long as the C4C_PARAM_...s have the SAME values.
  *   Ideally you want to #include the _decl.inl file in a header file and the
  *   _impl.inl in the respective source file.
- * - dyn_ prefixes indicates that the container WILL use malloc/free to
- *   allocate/deallocate memory at runtime. Otherwise you'll have a
- *   C4C_PARAM_MAX_SIZE or similiar to #define in order to specify the memory
- *   pool's capacity (cannot change at runtime).
  * - Every container's function is wrapped inside a fully customizable
  *   C4C_METHOD macro and with its Doxygen format comment explaining how to
  *   properly use it.
@@ -57,38 +53,44 @@
  *   free them upon deletion. Is your responsability to handle their lifecycle
  *   making sure they don't run out of scope after inserted or freed without
  *   removing the pointer in the container. In the future I may implement some
- *   sort of generic customizable allocator/deallocator in order to lift this
- *   job off the programmer and to make a more seamless integration with the
- *   containers (something like C++ std allocators maybe?). For now the
- *   containers inside this library have ONE and only one purpose: to keep your
- *   variables/pointers/etc... organized inside a lightweight, fast and
- *   customizable structure making it easy for the programmer to access them
+ *   sort of generic customizable allocator/deallocator for the stored elements
+ *   in order to lift this job off the programmer and to make a more seamless
+ *   integration with the containers (something like C++ std allocators maybe?).
+ *   For now the containers inside this library have ONE and only one purpose:
+ *   to keep your variables/pointers/etc... organized inside a lightweight, fast
+ *   and customizable structure making it easy for the programmer to access them
  *   whenever he wants to.
  *
  * Common macro structure:
- * - Macros prefixed with _C4C are not to be modified.
- * - Macros prefixed with a double underscore are for internal usage.
- * - Macros prefixed and postfixed with a double underscore are header guards.
- * - Macros prefixed with 'C4C_FEATURE_' can be defined before including the
- *   header to enable/disable some frequently used pattern.
- * - Files with the .inl extension are 'template' headers. Include them in the
- *   project, look at the end of those files and you'll see macros like '#undef
- *   C4C_PARAM_xxx' each with its own comment specifying what it does and what
- *   values you can put in (with some examples too). These macros must be
- *   correctly #defined before including the .inl file. Note that these macros
- *   will automatically get #undefined after each include of the .inl file.
- *   C4C_PARAM_OPT_xxx like macros can be optionally defined to customize some 
- *   other aspect of the container. If left undefined they will be automatically 
- *   #defined and #undefined inside the .inl files with a default value.
  * - Macros starting with 'C4C_' can be custom defined before including the .h
  *   file to customize their behavior. Remember to manually #undefine them when
  *   no longer needed.
+ * - Macros prefixed with '_C4C' are not to be modified.
+ * - Macros prefixed with a double underscore are for internal usage.
+ * - Macros prefixed and postfixed with a double underscore are header guards.
+ * - Macros prefixed with 'C4C_PARAM_' MUST be defined before BOTH '_decl.inl'
+ *   and '_impl.inl' with the SAME values.
+ * - Macros prefixed with 'C4C_PARAM_OPT_' behave in the same way as the ones
+ *   above but they can be omitted. This will create them with default values
+ *   (see their respective file).
+ * - Macros prefixed with 'C4C_FEATURE_' can be defined before including the
+ *   header to enable/disable some frequently used pattern.
+ * - Files with the .inl extension are 'template' headers. Include them in the
+ *   project, look at the beginning of those files and you'll see macros like
+ *   '#define C4C_PARAM_xxx'. Open the respective file in the internal/params
+ *   subfolder to see how to correctly use it. These macros must be correctly
+ *   #defined before including the .inl file. Note that these macros will
+ *   automatically get #undefined after each include of the .inl file.
+ *   C4C_PARAM_OPT_xxx like macros can be optionally defined to customize some
+ *   other aspect of the container. If left undefined they will be automatically
+ *   #defined and #undefined inside the .inl files with a default value.
  * - Note that currently, the only header with an include guard is config.h. Any
  *   other file can be included more than once (so you can customize macros) so
  *   the preprocessor might slow down a bit if they are excessively included
  *   everywhere (though not that much since they are all very small files).
  *
  * C4C errors API:
+ * - See the end of config.h for more info.
  * - Functions with the return value of type c4c_res_t can have multiple
  *   success/failure return values.
  * - See each function's Doxygen comment in the xxx_decl.inl file to understand
@@ -101,6 +103,20 @@
  *   certain (documented) particular behaviors may manifest themselves.
  * - Use the macro c4c_succeeded to get a boolean value when corner cases are
  *   negligible.
+ *
+ * Allocators:
+ * - Some containers will support allocators (see if they include them and if in
+ *   their description they have a big YES for the field 'Supports allocators:')
+ * - These containers can have both dynamic allocations and a static memory pool
+ *   depending on 2 macros: C4C_ALLOC_STATIC and C4C_ALLOC_DYNAMIC.
+ * - C4C_ALLOC_STATIC: define this macro BEFORE the container's declaration and
+ *   implementation files SPECIFING a number in the macro which will end up
+ *   being the memory pool capacity.
+ * - C4C_ALLOC_DYNAMIC: define this macro BEFORE the container's declaration and
+ *   implementation files SPECIFING the number of elements to allocate foreach
+ *   allocation call.
+ * - By default these containers will have C4C_ALLOC_DYNAMIC defined with the
+ *   value: 1.
  *
  * TODOs, FAQs, and stuff:
  * - I will add more and more containers as I need them. If you have created
@@ -118,11 +134,6 @@
  *   - There will be enough container variants.
  *   - There will be enough examples (at least one for each container type).
  *   - Typing errors, bugs and such will be completely (mostly) debellated.
- * - As already said previously I plan to add some sort of generic
- *   allocator/deallocator system which will automically allocate on the heap
- *   your struct (and initialize it) every time you push to a container and free
- *   it whenever you call pop. Not sure when but I already have an idea although
- *   not sure it is going to be a good nor a working one.
  *
  * @note This library uses <a href="https://semver.org/">Semantic Versioning
  *       2.0.0</a>
@@ -135,7 +146,7 @@
 #define _C4C_CONCAT _C4C_CONCAT_
 
 #define _C4C_VERSION_MAJOR 0
-#define _C4C_VERSION_MINOR 4
+#define _C4C_VERSION_MINOR 5
 #define _C4C_VERSION_PATCH 0
 #define _C4C_VERSION_STATE "beta"
 
@@ -155,15 +166,84 @@
 	C4C errors API
 ------------------------------------------------------------------------------*/
 
+/**
+ * Error codes.
+ * 
+ * C4CE prefixes indicate the function's couldn't do its job.
+ * C4CEW prefixes indicate the function's may have behaved slightly different from 
+ * what you may have expected.
+ */
 typedef enum {
-	/* <= 0 is an error. Check the function's doc for more info. */
-	c4c_success = 1
-	/* > 1 is a success but a corner case happened.
-	 * Might not get what you expected. Check the function's doc for more info.
+	/**
+	 * The container is already empty.
 	 */
+	C4CE_EMPTY 							= -7,
+
+	/**
+	 * The container is already full. Try resizing it (if dynamic).
+	 */
+	C4CE_FULL 							= -6,
+
+	/**
+	 * C4C_ALLOC_STATIC/DYNAMIC can generate this error.
+	 * Creating a static container with C4C_ALLOC_STATIC and trying to resize it 
+	 * is the classic example of this behavior (can't resize a static array).
+	 */
+	C4CE_CANT_DO 						= -5,
+
+	/**
+	 * The function has been called with an invalid argument.
+	 * Check the function's documentation for more info.
+	 */
+	C4CE_INVALID_ARG 					= -4,
+
+	/**
+	 * Index > capacity.
+	 */
+	C4CE_INDEX_OUT_OF_BOUNDS 			= -3,
+
+	/**
+	 * C4C_REALLOC() failed.
+	 */
+	C4CE_REALLOC_FAIL 					= -2,
+
+	/**
+	 * C4C_ALLOC() failed.
+	 */
+	C4CE_MALLOC_FAIL 					= -1,
+
+	/**
+	 * Generic error code.
+	 * 
+	 * @note Try not to use this pls.
+	 */
+	C4CE_GENERIC_ERROR 					=  0,
+
+/*----------------------------------------------------------------------------*/
+
+	/**
+	 * Everything went ok.
+	 */
+	C4CE_SUCCESS 						=  1,
+
+/*----------------------------------------------------------------------------*/
+
+	/**
+	 * Nothig happened in this function (i.e. the function returned immediately 
+	 * because there was no need to do something that has already be done for 
+	 * example).
+	 * Check the function's documentation to see why and when this can happen.
+	 */
+	C4CEW_NOTHING 						=  2,
+
+	/**
+	 * Due to resizing, some elements were discarded in the process.
+	 * See the function's documentation for more info.
+	 */
+	C4CEW_ELEMS_DISCARDED 				=  3,
 } c4c_res_t;
 
 #define c4c_succeeded(fn) \
-	((fn) >= c4c_success)
+	((fn) >= C4CE_SUCCESS)
 
 #endif /* __C4C_CONFIG_H__ */

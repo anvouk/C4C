@@ -44,22 +44,22 @@
 */
 
 /* 2. Declare the container interface in a .h file. */
-#define C4C_PARAM_STRUCT_NAME MY_STACK
-#define C4C_PARAM_PREFIX my_stack
-#define C4C_PARAM_CONTENT_TYPE int
-#define C4C_PARAM_MAX_SIZE 64
-#define C4C_PARAM_OPT_NO_VALUE -1
+#define C4C_PARAM_STRUCT_NAME	MY_STACK
+#define C4C_PARAM_PREFIX		my_stack
+#define C4C_PARAM_CONTENT_TYPE	int
+#define C4C_PARAM_CAPACITY		64
+#define C4C_PARAM_OPT_NO_VALUE	-1
 #include "c4c/stack/lifo_decl.inl"
 
 /* 3. Declare the container implementation in a .c file or wherever you
  *    want it to be in. Make sure the macro params for the implementation have the
  *    same values as the interface ones.
  */
-#define C4C_PARAM_STRUCT_NAME MY_STACK
-#define C4C_PARAM_PREFIX my_stack
-#define C4C_PARAM_CONTENT_TYPE int
-#define C4C_PARAM_MAX_SIZE 64
-#define C4C_PARAM_OPT_NO_VALUE -1
+#define C4C_PARAM_STRUCT_NAME	MY_STACK
+#define C4C_PARAM_PREFIX		my_stack
+#define C4C_PARAM_CONTENT_TYPE	int
+#define C4C_PARAM_CAPACITY		64
+#define C4C_PARAM_OPT_NO_VALUE	-1
 #include "c4c/stack/lifo_impl.inl"
 
 /* 4. Magic happens. You can now use the container for your type :) */
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 	t3 = 100;
 
 	/* print max stack size */
-	printf("stack max size: %d\n", my_stack_capacity());
+	printf("stack max size: %d\n", (int)my_stack_capacity());
 
 	/* prepare the stack for usage */
 	my_stack_clear(&stack);
