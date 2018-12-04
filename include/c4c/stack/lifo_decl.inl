@@ -83,7 +83,7 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
  *
  * @param stack  The LIFO stack.
  */
-C4C_METHOD(void, _clear, C4C_THIS stack);
+C4C_METHOD(void, clear, C4C_THIS stack);
 
 /**
  * Add a new tile to the end of the stack.
@@ -94,7 +94,7 @@ C4C_METHOD(void, _clear, C4C_THIS stack);
  * @retval C4CE_FULL     The stack is already full.
  * @retval C4CE_SUCCESS  Success.
  */
-C4C_METHOD(c4c_res_t, _push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element);
+C4C_METHOD(c4c_res_t, push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element);
 
 /**
  * Remove the element at the top of the stack and return it.
@@ -104,14 +104,14 @@ C4C_METHOD(c4c_res_t, _push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element)
  * @return The element at the top of the stack. C4C_PARAM_OPT_NO_VALUE if the stack
  *         is empty.
  */
-C4C_METHOD(C4C_PARAM_CONTENT_TYPE, _pop, C4C_THIS stack);
+C4C_METHOD(C4C_PARAM_CONTENT_TYPE, pop, C4C_THIS stack);
 
 /**
  * Get the stack maximum capacity.
  *
  * @return The stack max size.
  */
-C4C_METHOD_INLINE(size_t, _capacity, void)
+C4C_METHOD_INLINE(size_t, capacity, void)
 {
 	return (size_t)C4C_PARAM_CAPACITY;
 }
@@ -121,7 +121,7 @@ C4C_METHOD_INLINE(size_t, _capacity, void)
  *
  * @return A value that signals that the stack is currently empty.
  */
-C4C_METHOD_INLINE(C4C_PARAM_CONTENT_TYPE, _null_val, void)
+C4C_METHOD_INLINE(C4C_PARAM_CONTENT_TYPE, null_val, void)
 {
 	return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
 }

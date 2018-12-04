@@ -87,42 +87,42 @@
     linked list functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(void, _init, C4C_THIS head)
+C4C_METHOD(void, init, C4C_THIS head)
 {
 	head->next = head;
 	head->prev = head;
 }
 
-C4C_METHOD(void, _add, C4C_THIS head, C4C_THIS new_list)
+C4C_METHOD(void, add, C4C_THIS head, C4C_THIS new_list)
 {
 	_list_add_(new_list, head, head->next);
 }
 
-C4C_METHOD(void, _add_tail, C4C_THIS head, C4C_THIS new_list)
+C4C_METHOD(void, add_tail, C4C_THIS head, C4C_THIS new_list)
 {
 	_list_add_(new_list, head->prev, head);
 }
 
-C4C_METHOD(void, _delete, C4C_THIS entry)
+C4C_METHOD(void, delete, C4C_THIS entry)
 {
 	_list_delete_(entry->prev, entry->next);
 	entry->next = NULL;
 	entry->prev = NULL;
 }
 
-C4C_METHOD(void, _move, C4C_THIS head, C4C_THIS list)
+C4C_METHOD(void, move, C4C_THIS head, C4C_THIS list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(_add, head, list);
+	C4C_METHOD_CALL(add, head, list);
 }
 
-C4C_METHOD(void, _move_tail, C4C_THIS head, C4C_THIS list)
+C4C_METHOD(void, move_tail, C4C_THIS head, C4C_THIS list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(_add_tail, head, list);
+	C4C_METHOD_CALL(add_tail, head, list);
 }
 
-C4C_METHOD(void, _splice, C4C_THIS head, C4C_THIS list)
+C4C_METHOD(void, splice, C4C_THIS head, C4C_THIS list)
 {
 	if (!c4c_list_is_empty(list))
 		_list_splice_(list, head);

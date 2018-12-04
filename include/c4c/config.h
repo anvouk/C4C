@@ -145,9 +145,12 @@
 #define _C4C_CONCAT_(a, b) a##b
 #define _C4C_CONCAT _C4C_CONCAT_
 
+#define _C4C_CONCAT3_(a, b, c) a##b##c
+#define _C4C_CONCAT3 _C4C_CONCAT3_
+
 #define _C4C_VERSION_MAJOR 0
 #define _C4C_VERSION_MINOR 6
-#define _C4C_VERSION_PATCH 0
+#define _C4C_VERSION_PATCH 1
 #define _C4C_VERSION_STATE "beta"
 
 #define _C4C_MAKE_VERSION_STR(major, minor, patch) \

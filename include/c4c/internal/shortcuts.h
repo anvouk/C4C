@@ -38,5 +38,5 @@
 #define C4C_METHOD_INLINE(rettype, fn, ...) \
 	C4C_METHOD_INLINE_INTERNAL(C4C_PARAM_PREFIX, rettype, fn, __VA_ARGS__)
 
-#define C4C_METHOD_INLINE_CALL(prefix, fn, ...) \
+#define C4C_METHOD_INLINE_CALL(fn, ...) \
 	C4C_METHOD_INLINE_CALL_INTERNAL(C4C_PARAM_PREFIX, fn, __VA_ARGS__)

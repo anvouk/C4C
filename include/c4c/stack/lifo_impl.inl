@@ -43,7 +43,7 @@
     stack functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(void, _clear, C4C_THIS stack)
+C4C_METHOD(void, clear, C4C_THIS stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
@@ -51,7 +51,7 @@ C4C_METHOD(void, _clear, C4C_THIS stack)
 	}
 }
 
-C4C_METHOD(c4c_res_t, _push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element)
+C4C_METHOD(c4c_res_t, push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_CAPACITY)
 		return C4CE_FULL;
@@ -60,7 +60,7 @@ C4C_METHOD(c4c_res_t, _push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element)
 	return C4CE_SUCCESS;
 }
 
-C4C_METHOD(C4C_PARAM_CONTENT_TYPE, _pop, C4C_THIS stack)
+C4C_METHOD(C4C_PARAM_CONTENT_TYPE, pop, C4C_THIS stack)
 {
 	if (stack->count == 0)
 		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;

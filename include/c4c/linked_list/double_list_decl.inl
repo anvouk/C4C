@@ -81,7 +81,7 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
  *
  * @param head  The linked list head.
  */
-C4C_METHOD(void, _init, C4C_THIS head);
+C4C_METHOD(void, init, C4C_THIS head);
 
 /**
  * Insert a new entry after the specified head.
@@ -89,7 +89,7 @@ C4C_METHOD(void, _init, C4C_THIS head);
  * @param head      list Head to add it after.
  * @param new_list  New entry to be added.
  */
-C4C_METHOD(void, _add, C4C_THIS head, C4C_THIS new_list);
+C4C_METHOD(void, add, C4C_THIS head, C4C_THIS new_list);
 
 /**
  * Insert a new entry before the specified head.
@@ -97,7 +97,7 @@ C4C_METHOD(void, _add, C4C_THIS head, C4C_THIS new_list);
  * @param head      list Head to add it before.
  * @param new_list  New entry to be added.
  */
-C4C_METHOD(void, _add_tail, C4C_THIS head, C4C_THIS new_list);
+C4C_METHOD(void, add_tail, C4C_THIS head, C4C_THIS new_list);
 
 /**
  * Deletes entry from list.
@@ -107,7 +107,7 @@ C4C_METHOD(void, _add_tail, C4C_THIS head, C4C_THIS new_list);
  * @warning c4c_list_is_empty on entry does not return true after this, the
  *          entry is in an undefined state (next and prev are set to NULL).
  */
-C4C_METHOD(void, _delete, C4C_THIS entry);
+C4C_METHOD(void, delete, C4C_THIS entry);
 
 /**
  * Delete from one list and add as another's head.
@@ -115,7 +115,7 @@ C4C_METHOD(void, _delete, C4C_THIS entry);
  * @param head  The head that will precede our entry.
  * @param list  The entry to move.
  */
-C4C_METHOD(void, _move, C4C_THIS head, C4C_THIS list);
+C4C_METHOD(void, move, C4C_THIS head, C4C_THIS list);
 
 /**
  * Delete from one list and add as another's tail.
@@ -123,7 +123,7 @@ C4C_METHOD(void, _move, C4C_THIS head, C4C_THIS list);
  * @param head  The head that will follow our entry.
  * @param list  The entry to move.
  */
-C4C_METHOD(void, _move_tail, C4C_THIS head, C4C_THIS list);
+C4C_METHOD(void, move_tail, C4C_THIS head, C4C_THIS list);
 
 /**
  * Join two lists.
@@ -131,7 +131,7 @@ C4C_METHOD(void, _move_tail, C4C_THIS head, C4C_THIS list);
  * @param head  The place to add it in the first list.
  * @param list  The new list to add.
  */
-C4C_METHOD(void, _splice, C4C_THIS head, C4C_THIS list);
+C4C_METHOD(void, splice, C4C_THIS head, C4C_THIS list);
 
 /*------------------------------------------------------------------------------
     linked list generic functions
