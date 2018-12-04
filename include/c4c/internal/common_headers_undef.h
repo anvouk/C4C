@@ -22,4 +22,8 @@
  * THE SOFTWARE.
  */
 
+/*
+ * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
+ */
+
 #include "c4c/internal/shortcuts_undef.h"
