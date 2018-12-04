@@ -43,7 +43,7 @@
     stack functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
+C4C_METHOD(void, _clear, C4C_THIS stack)
 {
 	if (stack->count != 0) {
 		stack->count = 0;
@@ -51,7 +51,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _clear, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_N
 	}
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack, C4C_PARAM_CONTENT_TYPE new_element)
+C4C_METHOD(c4c_res_t, _push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element)
 {
 	if (stack->count >= C4C_PARAM_CAPACITY)
 		return C4CE_FULL;
@@ -60,7 +60,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push, C4C_STRUCT_DECLARE(C4C_PARAM_STRU
 	return C4CE_SUCCESS;
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* stack)
+C4C_METHOD(C4C_PARAM_CONTENT_TYPE, _pop, C4C_THIS stack)
 {
 	if (stack->count == 0)
 		return (C4C_PARAM_CONTENT_TYPE)C4C_PARAM_OPT_NO_VALUE;
@@ -73,6 +73,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, C4C_PARAM_CONTENT_TYPE, _pop, C4C_STRUCT_DECLARE(C4
 /*------------------------------------------------------------------------------
 	undef header params
 ------------------------------------------------------------------------------*/
+
+#include "c4c/internal/common_headers_undef.h"
 
 #include "c4c/internal/params/default_undef.h"
 #include "c4c/internal/params/contenttype_undef.h"

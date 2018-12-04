@@ -26,12 +26,17 @@
  * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
  */
 
-#include "c4c/config.h"
+#define C4C_THIS \
+	C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)*
 
-#include "c4c/internal/function.h"
-#include "c4c/internal/struct.h"
-#include "c4c/internal/method.h"
+#define C4C_METHOD(rettype, fn, ...) \
+	C4C_METHOD_INTERNAL(C4C_PARAM_PREFIX, rettype, fn, __VA_ARGS__)
 
-#include "c4c/internal/shortcuts.h"
+#define C4C_METHOD_CALL(fn, ...) \
+	C4C_METHOD_CALL_INTERNAL(C4C_PARAM_PREFIX, fn, __VA_ARGS__)
 
-#include <stddef.h> /* for size_t */
+#define C4C_METHOD_INLINE(rettype, fn, ...) \
+	C4C_METHOD_INLINE_INTERNAL(C4C_PARAM_PREFIX, rettype, fn, __VA_ARGS__)
+
+#define C4C_METHOD_INLINE_CALL(prefix, fn, ...) \
+	C4C_METHOD_INLINE_CALL_INTERNAL(C4C_PARAM_PREFIX, fn, __VA_ARGS__)

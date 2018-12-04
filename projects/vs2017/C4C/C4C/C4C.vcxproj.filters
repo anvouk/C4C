@@ -81,6 +81,15 @@
     <ClInclude Include="..\..\..\..\include\c4c\internal\params\content_undef.h">
       <Filter>include\internal\params</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\include\c4c\internal\shortcuts.h">
+      <Filter>include\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\c4c\internal\shortcuts_undef.h">
+      <Filter>include\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\c4c\internal\common_headers_undef.h">
+      <Filter>include\internal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\examples\example_double_linked_list_c89.c">

@@ -146,21 +146,24 @@
 #define _C4C_CONCAT _C4C_CONCAT_
 
 #define _C4C_VERSION_MAJOR 0
-#define _C4C_VERSION_MINOR 5
+#define _C4C_VERSION_MINOR 6
 #define _C4C_VERSION_PATCH 0
 #define _C4C_VERSION_STATE "beta"
 
-#define __C4C_VERSION_STR(major, minor, patch) \
+#define _C4C_MAKE_VERSION_STR(major, minor, patch) \
 	_C4C_STR(major) "." \
 	_C4C_STR(minor) "." \
 	_C4C_STR(patch) "-" \
 	_C4C_VERSION_STATE
 
 #define _C4C_VERSION_STR \
-	__C4C_VERSION_STR(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
+	_C4C_MAKE_VERSION_STR(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
 
-#define _C4C_VERSION_MAKE(major, minor, patch) \
+#define _C4C_MAKE_VERSION(major, minor, patch) \
 	((major) << 16) | ((minor) << 8) | (patch))
+
+#define _C4C_VERSION \
+	_C4C_MAKE_VERSION(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
 
 /*------------------------------------------------------------------------------
 	C4C errors API

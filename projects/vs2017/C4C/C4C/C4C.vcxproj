@@ -124,6 +124,7 @@
     <ClInclude Include="..\..\..\..\include\c4c\internal\allocators_impl.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\allocators_undef.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\common_headers.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\common_headers_undef.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\function.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\method.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\params\capacity.h" />
@@ -136,6 +137,8 @@
     <ClInclude Include="..\..\..\..\include\c4c\internal\params\contenttype_undef.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\params\default.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\params\default_undef.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\shortcuts.h" />
+    <ClInclude Include="..\..\..\..\include\c4c\internal\shortcuts_undef.h" />
     <ClInclude Include="..\..\..\..\include\c4c\internal\struct.h" />
   </ItemGroup>
   <ItemGroup>

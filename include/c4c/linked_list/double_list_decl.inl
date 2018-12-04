@@ -81,7 +81,7 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
  *
  * @param head  The linked list head.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head);
+C4C_METHOD(void, _init, C4C_THIS head);
 
 /**
  * Insert a new entry after the specified head.
@@ -89,7 +89,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NA
  * @param head      list Head to add it after.
  * @param new_list  New entry to be added.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* new_list);
+C4C_METHOD(void, _add, C4C_THIS head, C4C_THIS new_list);
 
 /**
  * Insert a new entry before the specified head.
@@ -97,7 +97,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAM
  * @param head      list Head to add it before.
  * @param new_list  New entry to be added.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* new_list);
+C4C_METHOD(void, _add_tail, C4C_THIS head, C4C_THIS new_list);
 
 /**
  * Deletes entry from list.
@@ -107,7 +107,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUC
  * @warning c4c_list_is_empty on entry does not return true after this, the
  *          entry is in an undefined state (next and prev are set to NULL).
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* entry);
+C4C_METHOD(void, _delete, C4C_THIS entry);
 
 /**
  * Delete from one list and add as another's head.
@@ -115,7 +115,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
  * @param head  The head that will precede our entry.
  * @param list  The entry to move.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list);
+C4C_METHOD(void, _move, C4C_THIS head, C4C_THIS list);
 
 /**
  * Delete from one list and add as another's tail.
@@ -123,7 +123,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NA
  * @param head  The head that will follow our entry.
  * @param list  The entry to move.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list);
+C4C_METHOD(void, _move_tail, C4C_THIS head, C4C_THIS list);
 
 /**
  * Join two lists.
@@ -131,7 +131,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRU
  * @param head  The place to add it in the first list.
  * @param list  The new list to add.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list);
+C4C_METHOD(void, _splice, C4C_THIS head, C4C_THIS list);
 
 /*------------------------------------------------------------------------------
     linked list generic functions
@@ -198,6 +198,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 /*------------------------------------------------------------------------------
     undef header params
 ------------------------------------------------------------------------------*/
+
+#include "c4c/internal/common_headers_undef.h"
 
 #include "c4c/internal/params/default_undef.h"
 #include "c4c/internal/params/content_undef.h"

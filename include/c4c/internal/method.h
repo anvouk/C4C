@@ -26,22 +26,22 @@
  * This file is part of the C4C library (https://github.com/QwertyQaz414/C4C).
  */
 
-#ifndef C4C_METHOD
-#define C4C_METHOD(prefix, rettype, suffix, ...) \
+#ifndef C4C_METHOD_INTERNAL
+#define C4C_METHOD_INTERNAL(prefix, rettype, suffix, ...) \
 	C4C_FUNCTION(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 
-#ifndef C4C_METHOD_CALL
-#define C4C_METHOD_CALL(prefix, suffix, ...) \
+#ifndef C4C_METHOD_CALL_INTERNAL
+#define C4C_METHOD_CALL_INTERNAL(prefix, suffix, ...) \
 	C4C_FUNCTION_CALL(_C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 
-#ifndef C4C_METHOD_INLINE
-#define C4C_METHOD_INLINE(prefix, rettype, suffix, ...) \
+#ifndef C4C_METHOD_INLINE_INTERNAL
+#define C4C_METHOD_INLINE_INTERNAL(prefix, rettype, suffix, ...) \
 	C4C_FUNCTION_INLINE(rettype, _C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif
 
-#ifndef C4C_METHOD_INLINE_CALL
-#define C4C_METHOD_INLINE_CALL(prefix, suffix, ...) \
+#ifndef C4C_METHOD_INLINE_CALL_INTERNAL
+#define C4C_METHOD_INLINE_CALL_INTERNAL(prefix, suffix, ...) \
 	C4C_FUNCTION_INLINE_CALL(_C4C_CONCAT(prefix, suffix), __VA_ARGS__)
 #endif

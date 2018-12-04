@@ -74,9 +74,9 @@
 
 #define _list_splice_(list, head) \
 	do { \
-		C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* first = list->next; \
-		C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* last = list->prev; \
-		C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* at = head->next; \
+		C4C_THIS first = list->next; \
+		C4C_THIS last = list->prev; \
+		C4C_THIS at = head->next; \
 		first->prev = head; \
 		head->next = first; \
 		last->next = at; \
@@ -87,42 +87,42 @@
     linked list functions implementation
 ------------------------------------------------------------------------------*/
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head)
+C4C_METHOD(void, _init, C4C_THIS head)
 {
 	head->next = head;
 	head->prev = head;
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _add, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* new_list)
+C4C_METHOD(void, _add, C4C_THIS head, C4C_THIS new_list)
 {
 	_list_add_(new_list, head, head->next);
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _add_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* new_list)
+C4C_METHOD(void, _add_tail, C4C_THIS head, C4C_THIS new_list)
 {
 	_list_add_(new_list, head->prev, head);
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _delete, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* entry)
+C4C_METHOD(void, _delete, C4C_THIS entry)
 {
 	_list_delete_(entry->prev, entry->next);
 	entry->next = NULL;
 	entry->prev = NULL;
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _move, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list)
+C4C_METHOD(void, _move, C4C_THIS head, C4C_THIS list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(C4C_PARAM_PREFIX, _add, head, list);
+	C4C_METHOD_CALL(_add, head, list);
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _move_tail, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list)
+C4C_METHOD(void, _move_tail, C4C_THIS head, C4C_THIS list)
 {
 	_list_delete_(list->prev, list->next);
-	C4C_METHOD_CALL(C4C_PARAM_PREFIX, _add_tail, head, list);
+	C4C_METHOD_CALL(_add_tail, head, list);
 }
 
-C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* head, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* list)
+C4C_METHOD(void, _splice, C4C_THIS head, C4C_THIS list)
 {
 	if (!c4c_list_is_empty(list))
 		_list_splice_(list, head);
@@ -136,6 +136,8 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _splice, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_
 /*------------------------------------------------------------------------------
 	undef header params
 ------------------------------------------------------------------------------*/
+
+#include "c4c/internal/common_headers_undef.h"
 
 #include "c4c/internal/params/default_undef.h"
 #include "c4c/internal/params/content_undef.h"

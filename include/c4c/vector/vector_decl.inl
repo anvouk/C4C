@@ -95,14 +95,14 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
  * @retval C4CE_MALLOC_FAIL  C4C_ALLOC() failed.
  * @retval C4CE_SUCCESS      Success.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _init, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t capacity);
+C4C_METHOD(c4c_res_t, _init, C4C_THIS vec, size_t capacity);
 
 /**
  * Free the vector's memory and prepare for new usage (must re-initialize first).
  *
  * @param vec  The vector.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, void, _free, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec);
+C4C_METHOD(void, _free, C4C_THIS vec);
 
 /**
  * Resize the vector. Either shrink it or grow it (return value may change).
@@ -118,7 +118,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, void, _free, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NA
  *                                vector, some elements were discarded.
  * @retval C4CEW_NOTHING          The new capacity is the same as the current one.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t capacity);
+C4C_METHOD(c4c_res_t, _resize, C4C_THIS vec, size_t capacity);
 
 /**
  * Copy the entire content of the first vector into the second one.
@@ -132,7 +132,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _resize, C4C_STRUCT_DECLARE(C4C_PARAM_ST
  * @retval C4CE_SUCCESS  Success.
  * @retval resize()'s    error codes.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* from, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* to);
+C4C_METHOD(c4c_res_t, _copy, const C4C_THIS from, C4C_THIS to);
 
 /**
  * Add a new element to the vector's tail (if not already full).
@@ -145,7 +145,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _copy, const C4C_STRUCT_DECLARE(C4C_PARA
  * @retval resize()'s    error codes.
  * @retval C4CE_SUCCESS  Success.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element);
+C4C_METHOD(c4c_res_t, _push_back, C4C_THIS vec, C4C_PARAM_CONTENT_TYPE element);
 
 /**
  * Add a new element at the specified index position.
@@ -165,7 +165,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_back, C4C_STRUCT_DECLARE(C4C_PARAM
  * @retval resize()'s                error codes.
  * @retval C4CE_SUCCESS              Success.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, C4C_PARAM_CONTENT_TYPE element, size_t index);
+C4C_METHOD(c4c_res_t, _push_at, C4C_THIS vec, C4C_PARAM_CONTENT_TYPE element, size_t index);
 
 /**
  * Remove the last element of the vector.
@@ -179,7 +179,7 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _push_at, C4C_STRUCT_DECLARE(C4C_PARAM_S
  * @retval C4CE_EMPTY    The vector is already empty.
  * @retval C4CE_SUCCESS  Success.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_back, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec);
+C4C_METHOD(c4c_res_t, _pop_back, C4C_THIS vec);
 
 /**
  * Remove the element at the specified index position in the vector.
@@ -193,11 +193,13 @@ C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_back, C4C_STRUCT_DECLARE(C4C_PARAM_
  * @retval C4CE_INDEX_OUT_OF_BOUNDS  Index is out of bounds (index >= size).
  * @retval C4CE_SUCCESS              Success.
  */
-C4C_METHOD(C4C_PARAM_PREFIX, c4c_res_t, _pop_at, C4C_STRUCT_DECLARE(C4C_PARAM_STRUCT_NAME)* vec, size_t index);
+C4C_METHOD(c4c_res_t, _pop_at, C4C_THIS vec, size_t index);
 
 /*------------------------------------------------------------------------------
 	undef header params
 ------------------------------------------------------------------------------*/
+
+#include "c4c/internal/common_headers_undef.h"
 
 #include "c4c/internal/params/default_undef.h"
 #include "c4c/internal/params/contenttype_undef.h"
