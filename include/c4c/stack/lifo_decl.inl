@@ -79,17 +79,17 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 /**
  * Clear the stack and prepare for new usage.
  *
- * @warning Does NOT free the stack's elements.
+ * @warning Does NOT free the stack elements.
  *
  * @param stack  The LIFO stack.
  */
 C4C_METHOD(void, clear, C4C_THIS stack);
 
 /**
- * Add a new tile to the end of the stack.
+ * Insert a new value at the end of the stack.
  *
+ * @param stack        The LIFO stack.
  * @param new_element  The element to add.
- * @param stack  The LIFO stack.
  *
  * @retval C4CE_FULL     The stack is already full.
  * @retval C4CE_SUCCESS  Success.
@@ -97,7 +97,7 @@ C4C_METHOD(void, clear, C4C_THIS stack);
 C4C_METHOD(c4c_res_t, push, C4C_THIS stack, C4C_PARAM_CONTENT_TYPE new_element);
 
 /**
- * Remove the element at the top of the stack and return it.
+ * Remove the value at the top of the stack and return it.
  *
  * @param stack  The LIFO stack.
  *
@@ -117,9 +117,9 @@ C4C_METHOD_INLINE(size_t, capacity, void)
 }
 
 /**
- * Get the stack's content invalid value.
+ * Get the invalid value for this stack.
  *
- * @return A value that signals that the stack is currently empty.
+ * @return A value that signals when the stack is empty.
  */
 C4C_METHOD_INLINE(C4C_PARAM_CONTENT_TYPE, null_val, void)
 {

@@ -86,12 +86,12 @@ C4C_STRUCT_END(C4C_PARAM_STRUCT_NAME)
 /**
  * Initialize a new dynamic vector.
  *
- * @param vec  	     The vector.
- * @param capacity   The vector's maximum size. Ignored if C4C_ALLOC_STATIC has 
- *                   been defined.
- * 
- * @retval C4CE_INVALID_ARG  Capacity is an invalid number (zero?). No allocation
- *                           has been performed.
+ * @param vec       The vector.
+ * @param capacity  The vector maximum size. Ignored if C4C_ALLOC_STATIC has
+ *                  been defined.
+ *
+ * @retval C4CE_INVALID_ARG  Capacity is an invalid number (zero?). No
+ *                           allocation has been performed.
  * @retval C4CE_MALLOC_FAIL  C4C_ALLOC() failed.
  * @retval C4CE_SUCCESS      Success.
  */
@@ -105,12 +105,12 @@ C4C_METHOD(c4c_res_t, init, C4C_THIS vec, size_t capacity);
 C4C_METHOD(void, free, C4C_THIS vec);
 
 /**
- * Resize the vector. Either shrink it or grow it (return value may change).
+ * Resize the vector. Either shrink or grow (return value may change).
  *
- * @param vec        The vector.
- * @param capacity   The new capacity.
+ * @param vec       The vector.
+ * @param capacity  The new capacity.
  *
- * @retval C4CE_REALLOC_FAIL      realloc failed.
+ * @retval C4CE_REALLOC_FAIL      Memory reallocation failed.
  * @retval C4CE_CANT_DO           C4C_ALLOC_STATIC is defined. Cannot resize a
  *                                static array.
  * @retval C4CE_SUCCESS           Success.
@@ -121,10 +121,11 @@ C4C_METHOD(void, free, C4C_THIS vec);
 C4C_METHOD(c4c_res_t, resize, C4C_THIS vec, size_t capacity);
 
 /**
- * Copy the entire content of the first vector into the second one.
- * 
- * @note The destination vector may grow in case the source's size is bigger than 
- *       the destination's capacity.
+ * Copy the entire content of the first vector into the second one. Resize if
+ * neccesary.
+ *
+ * @note The destination vector may grow in case the source's size is bigger
+ *       than the destination's capacity.
  *
  * @param from  The source vector.
  * @param to    The destination vector.
@@ -135,10 +136,10 @@ C4C_METHOD(c4c_res_t, resize, C4C_THIS vec, size_t capacity);
 C4C_METHOD(c4c_res_t, copy, const C4C_THIS from, C4C_THIS to);
 
 /**
- * Add a new element to the vector's tail (if not already full).
+ * Insert a new element at the end of the vector (if not already full).
  *
- * @param vec        The vector.
- * @param element    The element to add.
+ * @param vec      The vector.
+ * @param element  The element to add.
  *
  * @retval C4CE_FULL     The vector is full and can't be expanded
  *                       (C4C_ALLOC_STATIC has been defined).
@@ -148,16 +149,16 @@ C4C_METHOD(c4c_res_t, copy, const C4C_THIS from, C4C_THIS to);
 C4C_METHOD(c4c_res_t, push_back, C4C_THIS vec, C4C_PARAM_CONTENT_TYPE element);
 
 /**
- * Add a new element at the specified index position.
+ * Insert a new element at the specified index position.
  *
  * @note Although this function might seem like a very expensive one to call, in
- *       reality no memory management operation will be performed, thus can be
+ *       reality no memory management operation is be performed, thus it can be
  *       used with the only drawback that the old element at the index position
  *       will end up at the end of the vector.
  *
- * @param vec        The vector.
- * @param element    The element to add.
- * @param index      Where to add the new element.
+ * @param vec      The vector.
+ * @param element  The element to add.
+ * @param index    Where to add the new element.
  *
  * @retval C4CE_FULL                 The vector is full and can't be expanded
  *                                   (C4C_ALLOC_STATIC has been defined).
@@ -170,7 +171,7 @@ C4C_METHOD(c4c_res_t, push_at, C4C_THIS vec, C4C_PARAM_CONTENT_TYPE element, siz
 /**
  * Remove the last element of the vector.
  *
- * @note In reality this function will simply 'hide' it. If you manually
+ * @note In reality this function simply 'hides' it. If you manually
  *       increment the vector's size you'll still find it there unless it has
  *       already been overwritten.
  *
@@ -184,10 +185,10 @@ C4C_METHOD(c4c_res_t, pop_back, C4C_THIS vec);
 /**
  * Remove the element at the specified index position in the vector.
  *
- * @note No memory management operation will be performed.
+ * @note No memory management operation is be performed.
  *
  * @param vec    The vector.
- * @param index  The element's to remove index.
+ * @param index  The position of the element to remove.
  * 
  * @retval C4CE_EMPTY                The vector is already empty.
  * @retval C4CE_INDEX_OUT_OF_BOUNDS  Index is out of bounds (index >= size).

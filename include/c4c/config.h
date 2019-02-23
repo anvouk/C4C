@@ -30,15 +30,15 @@
 #define __C4C_CONFIG_H__
 
 /**
- * === C4C Introduction ===
+ * === C4C Instructions ===
  *
  * Containers structure:
  * - Containers are divided in folders.
  * - For a container type there might exist more than one implementation. In
  *   such cases consult the xxx_decl.inl file's documentation to see in what it
- *   differs from other variants.
+ *   differ from other variants.
  * - Files suffixed with a _decl.inl contain the container interface, function
- *   prototypes, and eventually function macros.
+ *   prototypes, and eventual function macros.
  * - Files suffixed with a _impl.inl contain the container implementation. Note
  *   that for every container (unless missig suffix) both _decl.inl and
  *   _impl.inl files are needed for it to compile and work properly.
@@ -64,7 +64,7 @@
  * Common macro structure:
  * - Macros starting with 'C4C_' can be custom defined before including the .h
  *   file to customize their behavior. Remember to manually #undefine them when
- *   no longer needed.
+ *   no longer needed in order to restore them to their original value.
  * - Macros prefixed with '_C4C' are not to be modified.
  * - Macros prefixed with a double underscore are for internal usage.
  * - Macros prefixed and postfixed with a double underscore are header guards.
@@ -76,20 +76,21 @@
  * - Macros prefixed with 'C4C_FEATURE_' can be defined before including the
  *   header to enable/disable some frequently used pattern.
  * - Files with the .inl extension are 'template' headers. Include them in the
- *   project, look at the beginning of those files and you'll see macros like
- *   '#define C4C_PARAM_xxx'. Open the respective file in the internal/params
- *   subfolder to see how to correctly use it. These macros must be correctly
- *   #defined before including the .inl file. Note that these macros will
- *   automatically get #undefined after each include of the .inl file.
- *   C4C_PARAM_OPT_xxx like macros can be optionally defined to customize some
- *   other aspect of the container. If left undefined they will be automatically
- *   #defined and #undefined inside the .inl files with a default value.
- * - Note that currently, the only header with an include guard is config.h. Any
+ *   project, look at the beginning of those files under the 'params' section
+ *   and you'll see macros like '#define C4C_PARAM_xxx'. Open the respective
+ *   file in the 'c4c/internal/params' subfolder to see how to correctly use it.
+ *   These macros must be correctly #defined before including the .inl file.
+ *   Note that these macros will automatically get #undefined after each include
+ *   of the .inl file. C4C_PARAM_OPT_xxx like macros can be optionally defined
+ *   to customize some other aspect of the container. If left undefined they
+ *   will be automatically #defined and #undefined inside the .inl files with a
+ *   default value.
+ * - Note that currently, the ONLY header with an include guard is config.h. Any
  *   other file can be included more than once (so you can customize macros) so
  *   the preprocessor might slow down a bit if they are excessively included
  *   everywhere (though not that much since they are all very small files).
  *
- * C4C errors API:
+ * C4C error API:
  * - See the end of config.h for more info.
  * - Functions with the return value of type c4c_res_t can have multiple
  *   success/failure return values.
@@ -97,17 +98,17 @@
  *   what each return value means.
  * - A return value of 1 states that the function succeeded without problems of
  *   any kind.
- * - A return value <= 0 indicates total failure of the function. The operation
+ * - A return value < 1 indicates total failure of the function. The operation
  *   couldn't be completed so the function aborted its execution.
  * - A return value > 1 states a success but the function hit a corner case so
  *   certain (documented) particular behaviors may manifest themselves.
- * - Use the macro c4c_succeeded to get a boolean value when corner cases are
+ * - Use the macro c4c_succeeded to get a boolean value when this cases are
  *   negligible.
  *
  * Allocators:
  * - Some containers will support allocators (see if they include them and if in
  *   their description they have a big YES for the field 'Supports allocators:')
- * - These containers can have both dynamic allocations and a static memory pool
+ * - These containers can have both dynamic allocations or a static memory pool
  *   depending on 2 macros: C4C_ALLOC_STATIC and C4C_ALLOC_DYNAMIC.
  * - C4C_ALLOC_STATIC: define this macro BEFORE the container's declaration and
  *   implementation files SPECIFING a number in the macro which will end up
@@ -121,8 +122,8 @@
  * TODOs, FAQs, and stuff:
  * - I will add more and more containers as I need them. If you have created
  *   your own container please feel free to submit it. However when you do
- *   please submit also an example file and make sure your container's functions
- *   are properly documented.
+ *   please submit also an EXAMPLE file and make sure your container's functions
+ *   are properly DOCUMENTED.
  * - As you have probably already noticed, I'm not a native English speaker!
  *   from time to time I WILL make errors of some sort (from simple typing
  *   errors to completely mess up entire sentences). Pull requests with such
@@ -131,12 +132,13 @@
  *   beta. This means that, hypothetically, the entire library may change from a
  *   commit to another! (I'll try to not make it happen though). Version 1.0.0
  *   will be published when:
- *   - There will be enough container variants.
- *   - There will be enough examples (at least one for each container type).
+ *   - There will be enough container types/variants.
+ *   - There will be enough examples (at least one for each container
+ *     type/variant).
  *   - Typing errors, bugs and such will be completely (mostly) debellated.
  *
- * @note This library uses <a href="https://semver.org/">Semantic Versioning
- *       2.0.0</a>
+ * @note  This library uses <a href="https://semver.org/">Semantic Versioning
+ *        2.0.0</a>
  */
 
 #define _C4C_STR_(x) #x
@@ -150,7 +152,7 @@
 
 #define _C4C_VERSION_MAJOR 0
 #define _C4C_VERSION_MINOR 6
-#define _C4C_VERSION_PATCH 1
+#define _C4C_VERSION_PATCH 2
 #define _C4C_VERSION_STATE "beta"
 
 #define _C4C_MAKE_VERSION_STR(major, minor, patch) \
@@ -169,24 +171,24 @@
 	_C4C_MAKE_VERSION(_C4C_VERSION_MAJOR, _C4C_VERSION_MINOR, _C4C_VERSION_PATCH)
 
 /*------------------------------------------------------------------------------
-	C4C errors API
+	C4C error API
 ------------------------------------------------------------------------------*/
 
 /**
  * Error codes.
  * 
- * C4CE prefixes indicate the function's couldn't do its job.
+ * C4CE prefixes indicate the function's couldn't do its job (always < 1).
  * C4CEW prefixes indicate the function's may have behaved slightly different from 
- * what you may have expected.
+ * what you may have expected (always > 1).
  */
 typedef enum {
 	/**
-	 * The container is already empty.
+	 * The container is empty.
 	 */
 	C4CE_EMPTY 							= -7,
 
 	/**
-	 * The container is already full. Try resizing it (if dynamic).
+	 * The container is full. Try resizing it (if dynamic).
 	 */
 	C4CE_FULL 							= -6,
 
@@ -228,7 +230,7 @@ typedef enum {
 /*----------------------------------------------------------------------------*/
 
 	/**
-	 * Everything went ok.
+	 * Everything is ok.
 	 */
 	C4CE_SUCCESS 						=  1,
 
@@ -236,8 +238,7 @@ typedef enum {
 
 	/**
 	 * Nothig happened in this function (i.e. the function returned immediately 
-	 * because there was no need to do something that has already be done for 
-	 * example).
+	 * because there was no need to do something that has already be done).
 	 * Check the function's documentation to see why and when this can happen.
 	 */
 	C4CEW_NOTHING 						=  2,
